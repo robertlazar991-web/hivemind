@@ -21,13 +21,28 @@ const sizeCategoryColors = {
 function Profile() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [showConnectModal, setShowConnectModal] = useState(false);
-  const [showCrossPollinationModal, setShowCrossPollinationModal] = useState(false);
-  const [connectMessage, setConnectMessage] = useState('');
-  const [crossPollinationMessage, setCrossPollinationMessage] = useState('');
-  const [messageSent, setMessageSent] = useState(false);
+  const [showRequestModal, setShowRequestModal] = useState(false);
+  const [requestType, setRequestType] = useState('connection');
+  const [selectedEvent, setSelectedEvent] = useState('');
+  const [requestMessage, setRequestMessage] = useState('');
+  const [requestSent, setRequestSent] = useState(false);
 
   const keeper = getHivekeeperById(id);
+
+  // Mock: Check if already connected (in real app, this would come from user state)
+  const isAlreadyConnected = false; // Set to true to test disabled state
+
+  // Mock: Get keeper's upcoming events that are open for cross-pollination
+  const getKeeperEvents = () => {
+    // In a real app, this would fetch from the keeper's events
+    return [
+      { id: 'e1', title: 'Full Moon Meditation Circle', date: 'Feb 15, 2025' },
+      { id: 'e2', title: 'Community Breathwork Session', date: 'Feb 22, 2025' },
+      { id: 'e3', title: 'Leadership Workshop', date: 'Mar 5, 2025' },
+    ];
+  };
+
+  const keeperEvents = getKeeperEvents();
 
   if (!keeper) {
     return (
@@ -45,22 +60,36 @@ function Profile() {
     );
   }
 
-  const handleConnect = () => {
-    setMessageSent(true);
+  const handleMessage = () => {
+    // Navigate directly to messages with this person
+    navigate(`/messages?to=${keeper.id}`);
+  };
+
+  const handleSendRequest = () => {
+    // Validate
+    if (!requestMessage.trim()) return;
+    if (requestType === 'cross-pollination' && !selectedEvent) return;
+
+    setRequestSent(true);
     setTimeout(() => {
-      setShowConnectModal(false);
-      setMessageSent(false);
-      setConnectMessage('');
+      setShowRequestModal(false);
+      setRequestSent(false);
+      setRequestMessage('');
+      setRequestType('connection');
+      setSelectedEvent('');
     }, 2000);
   };
 
-  const handleCrossPollination = () => {
-    setMessageSent(true);
-    setTimeout(() => {
-      setShowCrossPollinationModal(false);
-      setMessageSent(false);
-      setCrossPollinationMessage('');
-    }, 2000);
+  const openRequestModal = () => {
+    // Default to connection if not already connected, otherwise cross-pollination
+    setRequestType(isAlreadyConnected ? 'cross-pollination' : 'connection');
+    setShowRequestModal(true);
+  };
+
+  const isFormValid = () => {
+    if (!requestMessage.trim()) return false;
+    if (requestType === 'cross-pollination' && !selectedEvent) return false;
+    return true;
   };
 
   return (
@@ -239,122 +268,190 @@ function Profile() {
             </div>
           )}
 
-          {/* Action Buttons */}
+          {/* Action Buttons - Simplified to 2 buttons */}
           <div className="flex flex-col sm:flex-row gap-3">
             <button
-              onClick={() => setShowConnectModal(true)}
+              onClick={handleMessage}
               className="flex-1 px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
             >
-              <span>🤝</span>
-              Connect as Hivekeeper
+              <span>💬</span>
+              Message
             </button>
             <button
-              onClick={() => setShowCrossPollinationModal(true)}
+              onClick={openRequestModal}
               className="flex-1 px-6 py-3 bg-white border-2 border-amber-500 text-amber-700 rounded-xl font-semibold hover:bg-amber-50 transition-all flex items-center justify-center gap-2"
             >
-              <span>🐝</span>
-              Request Cross-pollination
+              <span>📋</span>
+              Request...
             </button>
           </div>
         </div>
       </div>
 
-      {/* Connect Modal */}
-      {showConnectModal && (
+      {/* Unified Request Modal */}
+      {showRequestModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-            {!messageSent ? (
+          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+            {!requestSent ? (
               <>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">🤝</span>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      Connect as Hivekeeper
-                    </h3>
-                    <p className="text-sm text-gray-500">Leader-to-leader connection</p>
-                  </div>
-                </div>
-                <p className="text-gray-600 mb-4">
-                  Introduce yourself to {keeper.name} and share why you'd like to connect as fellow Hivekeepers.
-                </p>
-                <textarea
-                  value={connectMessage}
-                  onChange={(e) => setConnectMessage(e.target.value)}
-                  placeholder={`Hi ${keeper.name.split(' ')[0]}, I'm a fellow Hivekeeper and I'd love to connect because...`}
-                  className="w-full h-32 p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
-                />
-                <div className="flex gap-3 mt-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-gray-900">
+                    Send Request to {keeper.name.split(' ')[0]}
+                  </h3>
                   <button
-                    onClick={() => setShowConnectModal(false)}
-                    className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
+                    onClick={() => setShowRequestModal(false)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={handleConnect}
-                    className="flex-1 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
-                  >
-                    Send Request
+                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </button>
                 </div>
-              </>
-            ) : (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Connection Request Sent!</h3>
-                <p className="text-gray-600">
-                  {keeper.name.split(' ')[0]} will receive your Hivekeeper connection request.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
-      {/* Cross-pollination Modal */}
-      {showCrossPollinationModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6">
-            {!messageSent ? (
-              <>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">🐝</span>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">
-                      Request Cross-pollination
-                    </h3>
-                    <p className="text-sm text-gray-500">Share offerings across hives</p>
+                {/* Request Type Selection */}
+                <div className="mb-5">
+                  <label className="text-sm font-medium text-gray-700 mb-3 block">What would you like to request?</label>
+                  <div className="space-y-2">
+                    {/* Connection Option */}
+                    <label
+                      className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                        requestType === 'connection'
+                          ? 'border-amber-500 bg-amber-50'
+                          : 'border-gray-200 hover:border-amber-200'
+                      } ${isAlreadyConnected ? 'opacity-50 cursor-not-allowed' : ''}`}
+                    >
+                      <input
+                        type="radio"
+                        name="requestType"
+                        value="connection"
+                        checked={requestType === 'connection'}
+                        onChange={(e) => setRequestType(e.target.value)}
+                        disabled={isAlreadyConnected}
+                        className="w-4 h-4 text-amber-500 focus:ring-amber-500"
+                      />
+                      <span className="text-xl">🤝</span>
+                      <div className="flex-1">
+                        <span className="font-medium text-gray-900">Connection</span>
+                        <p className="text-sm text-gray-500">
+                          {isAlreadyConnected
+                            ? 'Already connected'
+                            : 'Request to connect as fellow Hivekeepers'}
+                        </p>
+                      </div>
+                      {isAlreadyConnected && (
+                        <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      )}
+                    </label>
+
+                    {/* Cross-pollination Option */}
+                    <label
+                      className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                        requestType === 'cross-pollination'
+                          ? 'border-amber-500 bg-amber-50'
+                          : 'border-gray-200 hover:border-amber-200'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="requestType"
+                        value="cross-pollination"
+                        checked={requestType === 'cross-pollination'}
+                        onChange={(e) => setRequestType(e.target.value)}
+                        className="w-4 h-4 text-amber-500 focus:ring-amber-500"
+                      />
+                      <span className="text-xl">🐝</span>
+                      <div className="flex-1">
+                        <span className="font-medium text-gray-900">Cross-pollination</span>
+                        <p className="text-sm text-gray-500">Request to join one of their events</p>
+                      </div>
+                    </label>
                   </div>
                 </div>
-                <div className="bg-amber-50 p-4 rounded-xl mb-4 border border-amber-200">
+
+                {/* Event Selection (only for cross-pollination) */}
+                {requestType === 'cross-pollination' && (
+                  <div className="mb-5">
+                    <label className="text-sm font-medium text-gray-700 mb-2 block">
+                      Select an event to join <span className="text-red-500">*</span>
+                    </label>
+                    {keeperEvents.length > 0 ? (
+                      <select
+                        value={selectedEvent}
+                        onChange={(e) => setSelectedEvent(e.target.value)}
+                        className="w-full p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+                      >
+                        <option value="">Choose an event...</option>
+                        {keeperEvents.map(event => (
+                          <option key={event.id} value={event.id}>
+                            {event.title} ({event.date})
+                          </option>
+                        ))}
+                      </select>
+                    ) : (
+                      <div className="p-4 bg-gray-50 rounded-xl text-center">
+                        <p className="text-gray-500 text-sm">
+                          No upcoming events available for cross-pollination
+                        </p>
+                      </div>
+                    )}
+                    <p className="text-xs text-gray-500 mt-2">
+                      Cross-pollination lets you share this event with your hive members.
+                    </p>
+                  </div>
+                )}
+
+                {/* Message Field */}
+                <div className="mb-5">
+                  <label className="text-sm font-medium text-gray-700 mb-2 block">
+                    Your message <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    value={requestMessage}
+                    onChange={(e) => setRequestMessage(e.target.value)}
+                    placeholder={
+                      requestType === 'connection'
+                        ? `Hi ${keeper.name.split(' ')[0]}, I'm a fellow Hivekeeper and I'd love to connect because...`
+                        : `Hi ${keeper.name.split(' ')[0]}, I'd love to bring some of my community members to your event because...`
+                    }
+                    className="w-full h-28 p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                  />
+                </div>
+
+                {/* Info Box */}
+                <div className="bg-amber-50 p-4 rounded-xl mb-5 border border-amber-200">
                   <p className="text-sm text-amber-800">
-                    <strong>What is cross-pollination?</strong> It means sharing your offerings with each other's communities. For example, you might offer a workshop to their hive, and they might share their expertise with yours.
+                    {requestType === 'connection' ? (
+                      <>
+                        <strong>About connections:</strong> Connecting lets you message directly, see each other's full profiles, and opens opportunities for collaboration.
+                      </>
+                    ) : (
+                      <>
+                        <strong>About cross-pollination:</strong> You don't need to be connected to request cross-pollination. This allows you to bring members from your hive to their event.
+                      </>
+                    )}
                   </p>
                 </div>
-                <p className="text-gray-600 mb-4">
-                  Share what you'd like to offer {keeper.name}'s community and what you're hoping to receive:
-                </p>
-                <textarea
-                  value={crossPollinationMessage}
-                  onChange={(e) => setCrossPollinationMessage(e.target.value)}
-                  placeholder={`Hi ${keeper.name.split(' ')[0]}, I'd love to explore cross-pollination. I could offer your community... and I'd be interested in...`}
-                  className="w-full h-32 p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
-                />
-                <div className="flex gap-3 mt-4">
+
+                {/* Action Buttons */}
+                <div className="flex gap-3">
                   <button
-                    onClick={() => setShowCrossPollinationModal(false)}
-                    className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
+                    onClick={() => setShowRequestModal(false)}
+                    className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
                   >
                     Cancel
                   </button>
                   <button
-                    onClick={handleCrossPollination}
-                    className="flex-1 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
+                    onClick={handleSendRequest}
+                    disabled={!isFormValid()}
+                    className={`flex-1 px-4 py-3 rounded-xl font-medium transition-all flex items-center justify-center gap-2 ${
+                      isFormValid()
+                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:from-amber-600 hover:to-orange-600'
+                        : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    }`}
                   >
+                    <span>{requestType === 'connection' ? '🤝' : '🐝'}</span>
                     Send Request
                   </button>
                 </div>
@@ -362,11 +459,13 @@ function Profile() {
             ) : (
               <div className="text-center py-8">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <span className="text-3xl">🐝</span>
+                  <span className="text-3xl">{requestType === 'connection' ? '🤝' : '🐝'}</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Cross-pollination Request Sent!</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {requestType === 'connection' ? 'Connection' : 'Cross-pollination'} Request Sent!
+                </h3>
                 <p className="text-gray-600">
-                  {keeper.name.split(' ')[0]} will review your cross-pollination proposal.
+                  {keeper.name.split(' ')[0]} will receive your request and respond soon.
                 </p>
               </div>
             )}
