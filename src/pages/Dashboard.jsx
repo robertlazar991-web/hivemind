@@ -104,7 +104,10 @@ function Dashboard() {
 
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
+        <div
+          className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
+          onClick={() => navigate('/connections#connected')}
+        >
           <div className="flex items-center justify-between">
             <h3 className="text-amber-600 font-medium text-sm sm:text-base">Connected Hivekeepers</h3>
             <span className="text-xl sm:text-2xl">🤝</span>
@@ -113,7 +116,10 @@ function Dashboard() {
           <p className="text-xs sm:text-sm text-gray-500 mt-1">Leader-to-leader connections</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
+        <div
+          className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
+          onClick={() => navigate('/connections#pending-requests')}
+        >
           <div className="flex items-center justify-between">
             <h3 className="text-amber-600 font-medium text-sm sm:text-base">Pending Requests</h3>
             <span className="text-xl sm:text-2xl">📬</span>
@@ -122,7 +128,10 @@ function Dashboard() {
           <p className="text-xs sm:text-sm text-amber-600 mt-1">Awaiting your response</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
+        <div
+          className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
+          onClick={() => navigate('/connections#collaborations')}
+        >
           <div className="flex items-center justify-between">
             <h3 className="text-amber-600 font-medium text-sm sm:text-base">Cross-pollinations</h3>
             <span className="text-xl sm:text-2xl">🐝</span>
@@ -137,7 +146,7 @@ function Dashboard() {
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <h3 className="text-lg sm:text-xl font-bold text-gray-900">My Hive Partners</h3>
           <button
-            onClick={() => navigate('/community')}
+            onClick={() => navigate('/connections')}
             className="text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1 transition-colors text-sm sm:text-base"
           >
             View All
@@ -162,7 +171,7 @@ function Dashboard() {
             {totalConnected > connectedHivekeepers.length && (
               <div
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-100 border-2 border-white flex items-center justify-center cursor-pointer hover:bg-amber-200 transition-colors"
-                onClick={() => navigate('/community')}
+                onClick={() => navigate('/connections')}
               >
                 <span className="text-amber-700 font-medium text-xs sm:text-sm">
                   +{totalConnected - connectedHivekeepers.length}

@@ -7,6 +7,7 @@ import Collaborate from './pages/Collaborate';
 import Visions from './pages/Visions';
 import Profile from './pages/Profile';
 import Messages from './pages/Messages';
+import Connections from './pages/Connections';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="collaborate" element={<Collaborate />} />
           <Route path="visions" element={<Visions />} />
           <Route path="messages" element={<Messages />} />
+          <Route path="connections" element={<Connections />} />
           <Route path="profile/:id" element={<Profile />} />
         </Route>
       </Routes>
