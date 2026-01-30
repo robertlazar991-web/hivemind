@@ -6,7 +6,7 @@ function Dashboard() {
 
   // Current user data (Layer 1 Hivekeeper)
   const currentUser = {
-    name: 'Saya',
+    name: 'Sarah',
     photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop',
     hiveName: 'Consciousness Collective',
     hiveSize: 'Growing',
@@ -157,15 +157,15 @@ function Dashboard() {
         </div>
         <div className="space-y-2 sm:space-y-3 mb-4">
           <div className="flex items-center gap-3">
-            <span className="text-lg">📤</span>
+            <span className="text-lg">🐝</span>
             <p className="text-gray-700 text-sm sm:text-base">
               You've shared <span className="font-bold text-amber-700">{pollinationStats.eventsShared}</span> events
             </p>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-lg">📥</span>
+            <span className="text-lg">🌸</span>
             <p className="text-gray-700 text-sm sm:text-base">
-              <span className="font-bold text-amber-700">{pollinationStats.eventsReceivedFromOthers}</span> events shared to your hive by others
+              <span className="font-bold text-amber-700">{pollinationStats.eventsReceivedFromOthers}</span> of your events were shared
             </p>
           </div>
         </div>

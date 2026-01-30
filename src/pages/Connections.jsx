@@ -524,7 +524,7 @@ function Connections() {
             {/* Events You Shared */}
             <div>
               <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <span className="text-lg">📤</span>
+                <span className="text-lg">🐝</span>
                 You shared
               </h3>
               <div className="space-y-2">
@@ -558,8 +558,8 @@ function Connections() {
             {/* Events Shared to Your Hive */}
             <div>
               <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                <span className="text-lg">📥</span>
-                Shared to your hive
+                <span className="text-lg">🌸</span>
+                Your events shared
               </h3>
               <div className="space-y-2">
                 {pollinationHistory.received.map(item => {
