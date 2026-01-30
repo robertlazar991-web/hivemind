@@ -188,6 +188,17 @@ function Messages() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      {/* Back to Dashboard - Hidden on mobile when conversation is selected */}
+      <button
+        onClick={() => navigate('/')}
+        className={`flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm ${selectedConversation ? 'hidden lg:flex' : ''}`}
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Dashboard
+      </button>
+
       {/* Header - Hidden on mobile when conversation is selected */}
       <div className={`mb-4 sm:mb-6 ${selectedConversation ? 'hidden lg:block' : ''}`}>
         <div className="flex items-center justify-between">

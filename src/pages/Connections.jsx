@@ -112,6 +112,22 @@ function Connections() {
     },
   ]);
 
+  // Cross-pollination history data
+  const pollinationHistory = {
+    shared: [
+      { id: 1, eventTitle: 'Morning Meditation', hostName: 'Maya Chen', date: 'Jan 28' },
+      { id: 2, eventTitle: 'Permaculture Workshop', hostName: 'David Rivera', date: 'Jan 20' },
+      { id: 3, eventTitle: 'Sound Bath Experience', hostName: 'Jordan Ellis', date: 'Jan 15' },
+      { id: 4, eventTitle: 'Herbal Medicine Making', hostName: 'Amara Okafor', date: 'Jan 10' },
+    ],
+    received: [
+      { id: 1, eventTitle: 'Full Moon Gathering', sharerName: 'Luna Morales', date: 'Jan 26' },
+      { id: 2, eventTitle: 'Leadership Circle', sharerName: 'Marcus Thompson', date: 'Jan 22' },
+      { id: 3, eventTitle: 'Breathwork Session', sharerName: 'Sarah Johnson', date: 'Jan 18' },
+      { id: 4, eventTitle: 'Conscious Tech Meetup', sharerName: 'Alex Kim', date: 'Jan 12' },
+    ],
+  };
+
   // Filter counts
   const connectionRequests = pendingRequests.filter(r => r.type === 'connection');
   const crossPollinationRequests = pendingRequests.filter(r => r.type === 'cross-pollination');
@@ -147,19 +163,21 @@ function Connections() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      {/* Back to Dashboard */}
+      <button
+        onClick={() => navigate('/')}
+        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Dashboard
+      </button>
+
       {/* Header */}
-      <div className="mb-8">
-        <button
-          onClick={() => navigate('/')}
-          className="flex items-center gap-2 text-amber-600 hover:text-amber-800 mb-4 transition-colors"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          Back to Dashboard
-        </button>
+      <div className="mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Connections</h1>
-        <p className="text-amber-700 mt-1">Your network of fellow Hivekeepers</p>
+        <p className="text-amber-700 mt-1 text-sm sm:text-base">Your network of fellow Hivekeepers</p>
       </div>
 
       {/* Pending Requests Section */}
@@ -415,7 +433,7 @@ function Connections() {
       </section>
 
       {/* Active Collaborations Section */}
-      <section id="collaborations" className="scroll-mt-20">
+      <section id="collaborations" className="scroll-mt-20 mb-10">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-bold text-gray-900">
             Active Collaborations
@@ -490,6 +508,88 @@ function Connections() {
             </button>
           </div>
         )}
+      </section>
+
+      {/* Cross-pollination History Section */}
+      <section id="pollination-history" className="scroll-mt-20">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <span>🐝</span>
+            Cross-pollination History
+          </h2>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Events You Shared */}
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <span className="text-lg">📤</span>
+                You shared
+              </h3>
+              <div className="space-y-2">
+                {pollinationHistory.shared.map(item => {
+                  const host = getHivekeeperByName(item.hostName);
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-3 p-3 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors cursor-pointer"
+                      onClick={() => host && navigate(`/profile/${host.id}`)}
+                    >
+                      {host && (
+                        <img
+                          src={host.photo}
+                          alt={host.name}
+                          className="w-8 h-8 rounded-full object-cover border border-amber-200"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-900 truncate">
+                          <span className="font-medium">{item.hostName}'s</span> "{item.eventTitle}"
+                        </p>
+                        <p className="text-xs text-gray-500">{item.date}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Events Shared to Your Hive */}
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+                <span className="text-lg">📥</span>
+                Shared to your hive
+              </h3>
+              <div className="space-y-2">
+                {pollinationHistory.received.map(item => {
+                  const sharer = getHivekeeperByName(item.sharerName);
+                  return (
+                    <div
+                      key={item.id}
+                      className="flex items-center gap-3 p-3 bg-green-50 rounded-xl hover:bg-green-100 transition-colors cursor-pointer"
+                      onClick={() => sharer && navigate(`/profile/${sharer.id}`)}
+                    >
+                      {sharer && (
+                        <img
+                          src={sharer.photo}
+                          alt={sharer.name}
+                          className="w-8 h-8 rounded-full object-cover border border-green-200"
+                        />
+                      )}
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm text-gray-900 truncate">
+                          <span className="font-medium">{item.sharerName}</span> shared your "{item.eventTitle}"
+                        </p>
+                        <p className="text-xs text-gray-500">{item.date}</p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
   );

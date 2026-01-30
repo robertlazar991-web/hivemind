@@ -34,6 +34,12 @@ function Dashboard() {
     crossPollinations: 2,
   };
 
+  // Cross-pollination activity stats
+  const pollinationStats = {
+    eventsShared: 8,
+    eventsReceivedFromOthers: 12,
+  };
+
   // Recent activity (leader-relevant)
   const recentActivity = [
     {
@@ -139,6 +145,39 @@ function Dashboard() {
           <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{stats.crossPollinations}</p>
           <p className="text-xs sm:text-sm text-green-600 mt-1">Active partnerships</p>
         </div>
+      </div>
+
+      {/* Cross-pollination Activity Section */}
+      <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-200 mb-6 sm:mb-8">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
+            <span>🐝</span>
+            Your Cross-pollination Activity
+          </h3>
+        </div>
+        <div className="space-y-2 sm:space-y-3 mb-4">
+          <div className="flex items-center gap-3">
+            <span className="text-lg">📤</span>
+            <p className="text-gray-700 text-sm sm:text-base">
+              You've shared <span className="font-bold text-amber-700">{pollinationStats.eventsShared}</span> events
+            </p>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="text-lg">📥</span>
+            <p className="text-gray-700 text-sm sm:text-base">
+              <span className="font-bold text-amber-700">{pollinationStats.eventsReceivedFromOthers}</span> events shared to your hive by others
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => navigate('/connections#pollination-history')}
+          className="text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1 transition-colors text-sm sm:text-base"
+        >
+          View History
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
       </div>
 
       {/* My Hive Partners Section */}
