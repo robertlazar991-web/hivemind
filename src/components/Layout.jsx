@@ -43,6 +43,9 @@ function Layout() {
               <NavLink to="/events" className={navLinkClass}>
                 Events
               </NavLink>
+              <NavLink to="/collaborate" className={navLinkClass}>
+                Collaborate
+              </NavLink>
               <NavLink to="/messages" className={({ isActive }) =>
                 `relative ${isActive
                   ? 'text-amber-700 font-medium'
@@ -107,6 +110,16 @@ function Layout() {
                 <span className="flex items-center gap-3">
                   <span>📅</span>
                   Events
+                </span>
+              </NavLink>
+              <NavLink
+                to="/collaborate"
+                className={mobileNavLinkClass}
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="flex items-center gap-3">
+                  <span>🤝</span>
+                  Collaborate
                 </span>
               </NavLink>
               <NavLink

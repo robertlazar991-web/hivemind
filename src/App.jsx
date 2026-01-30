@@ -3,6 +3,7 @@ import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Community from './pages/Community';
 import Events from './pages/Events';
+import Collaborate from './pages/Collaborate';
 import Visions from './pages/Visions';
 import Profile from './pages/Profile';
 import Messages from './pages/Messages';
@@ -15,6 +16,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="community" element={<Community />} />
           <Route path="events" element={<Events />} />
+          <Route path="collaborate" element={<Collaborate />} />
           <Route path="visions" element={<Visions />} />
           <Route path="messages" element={<Messages />} />
           <Route path="profile/:id" element={<Profile />} />
