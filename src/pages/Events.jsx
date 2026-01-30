@@ -7,6 +7,38 @@ const getHostByName = (name) => {
   return hivekeepers.find(h => h.name === name) || null;
 };
 
+// Timezone options
+const timezoneOptions = [
+  { value: 'UTC', label: 'UTC', abbr: 'UTC' },
+  { value: 'Europe/London', label: 'Europe/London (GMT)', abbr: 'GMT' },
+  { value: 'Europe/Berlin', label: 'Europe/Berlin (CET)', abbr: 'CET' },
+  { value: 'Europe/Paris', label: 'Europe/Paris (CET)', abbr: 'CET' },
+  { value: 'America/New_York', label: 'America/New_York (EST)', abbr: 'EST' },
+  { value: 'America/Chicago', label: 'America/Chicago (CST)', abbr: 'CST' },
+  { value: 'America/Denver', label: 'America/Denver (MST)', abbr: 'MST' },
+  { value: 'America/Los_Angeles', label: 'America/Los_Angeles (PST)', abbr: 'PST' },
+  { value: 'Asia/Tokyo', label: 'Asia/Tokyo (JST)', abbr: 'JST' },
+  { value: 'Asia/Shanghai', label: 'Asia/Shanghai (CST)', abbr: 'CST' },
+  { value: 'Australia/Sydney', label: 'Australia/Sydney (AEST)', abbr: 'AEST' },
+];
+
+// Get user's timezone or default to Europe/Berlin
+const getDefaultTimezone = () => {
+  try {
+    const userTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const found = timezoneOptions.find(tz => tz.value === userTz);
+    return found ? userTz : 'Europe/Berlin';
+  } catch {
+    return 'Europe/Berlin';
+  }
+};
+
+// Get timezone abbreviation
+const getTimezoneAbbr = (tzValue) => {
+  const tz = timezoneOptions.find(t => t.value === tzValue);
+  return tz ? tz.abbr : 'CET';
+};
+
 // Category configuration
 const categoryConfig = {
   'cross-pollination': {
@@ -50,6 +82,7 @@ function Events() {
     title: '',
     date: '',
     time: '',
+    timezone: getDefaultTimezone(),
     location: '',
     type: 'Workshop',
     category: 'cross-pollination',
@@ -63,6 +96,7 @@ function Events() {
       title: 'Full Moon Gathering',
       date: 'Feb 1, 2026',
       time: '7:00 PM',
+      timezone: 'America/Los_Angeles',
       location: 'Riverside Park, Portland',
       host: 'Sarah Johnson',
       type: 'Ceremony',
@@ -76,6 +110,7 @@ function Events() {
       title: 'Mindfulness Morning',
       date: 'Feb 2, 2026',
       time: '6:30 AM',
+      timezone: 'America/Los_Angeles',
       location: 'Zoom',
       host: 'Maya Chen',
       type: 'Meditation',
@@ -89,6 +124,7 @@ function Events() {
       title: 'Permaculture Workshop',
       date: 'Feb 5, 2026',
       time: '10:00 AM',
+      timezone: 'America/Chicago',
       location: 'Community Garden, Austin',
       host: 'David Rivera',
       type: 'Workshop',
@@ -102,6 +138,7 @@ function Events() {
       title: 'Sound Bath Experience',
       date: 'Feb 8, 2026',
       time: '5:00 PM',
+      timezone: 'America/Chicago',
       location: 'Healing Center, Nashville',
       host: 'Jordan Ellis',
       type: 'Healing',
@@ -115,6 +152,7 @@ function Events() {
       title: 'Conscious Leadership Circle',
       date: 'Feb 10, 2026',
       time: '12:00 PM',
+      timezone: 'America/Los_Angeles',
       location: 'Zoom',
       host: 'Alex Kim',
       type: 'Discussion',
@@ -128,6 +166,7 @@ function Events() {
       title: 'Herbal Medicine Making',
       date: 'Feb 12, 2026',
       time: '2:00 PM',
+      timezone: 'America/New_York',
       location: 'Okafor Apothecary, Atlanta',
       host: 'Amara Okafor',
       type: 'Workshop',
@@ -182,6 +221,7 @@ function Events() {
       title: '',
       date: '',
       time: '',
+      timezone: getDefaultTimezone(),
       location: '',
       type: 'Workshop',
       category: 'cross-pollination',
@@ -395,7 +435,7 @@ function Events() {
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <span className="truncate">{event.date} at {event.time}</span>
+                  <span className="truncate">{event.date} at {event.time} {getTimezoneAbbr(event.timezone)}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -541,6 +581,19 @@ function Events() {
                     className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Timezone</label>
+                <select
+                  value={newEvent.timezone}
+                  onChange={(e) => setNewEvent({ ...newEvent, timezone: e.target.value })}
+                  className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                >
+                  {timezoneOptions.map(tz => (
+                    <option key={tz.value} value={tz.value}>{tz.label}</option>
+                  ))}
+                </select>
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -703,7 +756,7 @@ function Events() {
                         <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        <span>{event.date} at {event.time}</span>
+                        <span>{event.date} at {event.time} {getTimezoneAbbr(event.timezone)}</span>
                       </div>
                       <div className="flex items-center gap-3 text-gray-600">
                         <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
