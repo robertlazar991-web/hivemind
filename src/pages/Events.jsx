@@ -174,30 +174,31 @@ function Events() {
   };
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex items-center justify-between mb-8">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="flex items-center justify-between mb-6 sm:mb-8 gap-4">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">Events</h2>
-          <p className="text-amber-700 mt-1">Upcoming gatherings and experiences</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Events</h2>
+          <p className="text-amber-700 mt-1 text-sm sm:text-base">Upcoming gatherings and experiences</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center gap-2"
+          className="px-4 py-2.5 sm:px-6 sm:py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center gap-2 flex-shrink-0"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          Create Event
+          <span className="hidden sm:inline">Create Event</span>
+          <span className="sm:hidden">Create</span>
         </button>
       </div>
 
       {/* Filters */}
-      <div className="mb-6 space-y-4">
+      <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-4">
         {/* Event Type Filter */}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
           <button
             onClick={() => setSelectedType('all')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               selectedType === 'all'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
                 : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
@@ -209,7 +210,7 @@ function Events() {
             <button
               key={type}
               onClick={() => setSelectedType(type)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                 selectedType === type
                   ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
                   : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
@@ -221,10 +222,10 @@ function Events() {
         </div>
 
         {/* Online/Offline Filter */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           <button
             onClick={() => setSelectedFormat('all')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               selectedFormat === 'all'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
                 : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
@@ -234,26 +235,26 @@ function Events() {
           </button>
           <button
             onClick={() => setSelectedFormat('online')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap ${
               selectedFormat === 'online'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
                 : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
             }`}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
             </svg>
             Online
           </button>
           <button
             onClick={() => setSelectedFormat('offline')}
-            className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap ${
               selectedFormat === 'offline'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
                 : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
             }`}
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
@@ -263,7 +264,7 @@ function Events() {
       </div>
 
       {/* Events Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {filteredEvents.map(event => {
           const host = getHostByName(event.host);
           const isJoined = joinedEvents.includes(event.id);
@@ -271,64 +272,64 @@ function Events() {
           return (
             <div
               key={event.id}
-              className="bg-white rounded-2xl shadow-sm border border-amber-100 p-6 hover:shadow-md transition-shadow"
+              className="bg-white rounded-2xl shadow-sm border border-amber-100 p-4 sm:p-6 hover:shadow-md transition-shadow"
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex items-center gap-2">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${typeColors[event.type]}`}>
+              <div className="flex items-start justify-between mb-3 sm:mb-4 gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                  <span className={`px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium ${typeColors[event.type]}`}>
                     {event.type}
                   </span>
                   {event.isOnline ? (
-                    <span className="px-3 py-1 rounded-full text-sm font-medium bg-cyan-100 text-cyan-700 flex items-center gap-1">
+                    <span className="px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium bg-cyan-100 text-cyan-700 flex items-center gap-1">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
                       </svg>
-                      Online
+                      <span className="hidden xs:inline">Online</span>
                     </span>
                   ) : (
-                    <span className="px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-700 flex items-center gap-1">
+                    <span className="px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium bg-emerald-100 text-emerald-700 flex items-center gap-1">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
-                      In-Person
+                      <span className="hidden xs:inline">In-Person</span>
                     </span>
                   )}
                 </div>
-                <div className="flex items-center gap-1 text-amber-600">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                <div className="flex items-center gap-1 text-amber-600 flex-shrink-0">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
                   </svg>
-                  <span className="text-sm font-medium">{event.attendees}/{event.maxAttendees}</span>
+                  <span className="text-xs sm:text-sm font-medium">{event.attendees}/{event.maxAttendees}</span>
                 </div>
               </div>
 
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
 
-              <div className="space-y-2 text-gray-600 mb-4">
+              <div className="space-y-1.5 sm:space-y-2 text-gray-600 mb-4 text-sm">
                 <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
-                  <span>{event.date} at {event.time}</span>
+                  <span className="truncate">{event.date} at {event.time}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <svg className="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  <span>{event.location}</span>
+                  <span className="truncate">{event.location}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   {host && (
                     <img
                       src={host.photo}
                       alt={host.name}
-                      className="w-6 h-6 rounded-full object-cover border border-amber-300 cursor-pointer hover:scale-110 transition-transform"
+                      className="w-5 h-5 sm:w-6 sm:h-6 rounded-full object-cover border border-amber-300 cursor-pointer hover:scale-110 transition-transform flex-shrink-0"
                       onClick={() => navigate(`/profile/${host.id}`)}
                     />
                   )}
                   <span
-                    className="text-amber-700 hover:text-amber-800 cursor-pointer"
+                    className="text-amber-700 hover:text-amber-800 cursor-pointer truncate"
                     onClick={() => host && navigate(`/profile/${host.id}`)}
                   >
                     Hosted by {event.host}
@@ -336,13 +337,13 @@ function Events() {
                 </div>
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex gap-2 sm:gap-3">
                 {isJoined ? (
                   <button
                     onClick={() => handleLeaveEvent(event.id)}
-                    className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all flex items-center justify-center gap-2"
+                    className="flex-1 px-3 py-2 sm:px-4 bg-gray-100 text-gray-700 rounded-xl text-sm sm:text-base font-medium hover:bg-gray-200 transition-all flex items-center justify-center gap-1.5 sm:gap-2"
                   >
-                    <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     Joined
@@ -351,14 +352,14 @@ function Events() {
                   <button
                     onClick={() => setShowJoinModal(event)}
                     disabled={event.attendees >= event.maxAttendees}
-                    className="flex-1 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 px-3 py-2 sm:px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl text-sm sm:text-base font-medium hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {event.attendees >= event.maxAttendees ? 'Full' : 'Join Event'}
+                    {event.attendees >= event.maxAttendees ? 'Full' : 'Join'}
                   </button>
                 )}
                 <button
                   onClick={() => setShowDetailsModal(event)}
-                  className="px-4 py-2 bg-amber-100 text-amber-700 rounded-xl font-medium hover:bg-amber-200 transition-all"
+                  className="px-3 py-2 sm:px-4 bg-amber-100 text-amber-700 rounded-xl text-sm sm:text-base font-medium hover:bg-amber-200 transition-all"
                 >
                   Details
                 </button>
@@ -369,8 +370,8 @@ function Events() {
       </div>
 
       {filteredEvents.length === 0 && (
-        <div className="text-center py-12 bg-white rounded-2xl border border-amber-100">
-          <p className="text-gray-500">No events found matching your filters.</p>
+        <div className="text-center py-8 sm:py-12 bg-white rounded-2xl border border-amber-100">
+          <p className="text-gray-500 text-sm sm:text-base">No events found matching your filters.</p>
         </div>
       )}
 

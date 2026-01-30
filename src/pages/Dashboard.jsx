@@ -67,24 +67,24 @@ function Dashboard() {
   ];
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
       {/* Header Section */}
-      <div className="mb-8">
-        <div className="flex items-center gap-4 mb-2">
+      <div className="mb-6 sm:mb-8">
+        <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-2">
           <img
             src={currentUser.photo}
             alt={currentUser.name}
-            className="w-14 h-14 rounded-full object-cover border-3 border-amber-400"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-3 border-amber-400 flex-shrink-0"
           />
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900">Welcome back, {currentUser.name}</h2>
-            <div className="flex items-center gap-2 mt-1 flex-wrap">
+          <div className="min-w-0">
+            <h2 className="text-xl sm:text-3xl font-bold text-gray-900">Welcome back, {currentUser.name}</h2>
+            <div className="flex items-center gap-1.5 sm:gap-2 mt-1 flex-wrap text-sm sm:text-base">
               <span className="text-amber-700 font-medium">My Hive: {currentUser.hiveName}</span>
-              <span className="text-gray-400">•</span>
+              <span className="text-gray-400 hidden sm:inline">•</span>
               <span className={`font-medium ${hiveSizeInfo[currentUser.hiveSize].color}`}>
                 {currentUser.hiveSize}
               </span>
-              <span className="text-gray-400">•</span>
+              <span className="text-gray-400 hidden sm:inline">•</span>
               <a
                 href={currentUser.hiveLink}
                 target="_blank"
@@ -103,42 +103,42 @@ function Dashboard() {
       </div>
 
       {/* Stat Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-amber-100">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-600 font-medium">Connected Hivekeepers</h3>
-            <span className="text-2xl">🤝</span>
+            <h3 className="text-amber-600 font-medium text-sm sm:text-base">Connected Hivekeepers</h3>
+            <span className="text-xl sm:text-2xl">🤝</span>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mt-2">{stats.connectedHivekeepers}</p>
-          <p className="text-sm text-gray-500 mt-1">Leader-to-leader connections</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{stats.connectedHivekeepers}</p>
+          <p className="text-xs sm:text-sm text-gray-500 mt-1">Leader-to-leader connections</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-amber-100">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-600 font-medium">Pending Requests</h3>
-            <span className="text-2xl">📬</span>
+            <h3 className="text-amber-600 font-medium text-sm sm:text-base">Pending Requests</h3>
+            <span className="text-xl sm:text-2xl">📬</span>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mt-2">{stats.pendingRequests}</p>
-          <p className="text-sm text-amber-600 mt-1">Awaiting your response</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{stats.pendingRequests}</p>
+          <p className="text-xs sm:text-sm text-amber-600 mt-1">Awaiting your response</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-amber-100">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-600 font-medium">Cross-pollinations</h3>
-            <span className="text-2xl">🐝</span>
+            <h3 className="text-amber-600 font-medium text-sm sm:text-base">Cross-pollinations</h3>
+            <span className="text-xl sm:text-2xl">🐝</span>
           </div>
-          <p className="text-3xl font-bold text-gray-900 mt-2">{stats.crossPollinations}</p>
-          <p className="text-sm text-green-600 mt-1">Active partnerships</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{stats.crossPollinations}</p>
+          <p className="text-xs sm:text-sm text-green-600 mt-1">Active partnerships</p>
         </div>
       </div>
 
       {/* My Hive Partners Section */}
-      <div className="bg-white rounded-2xl p-6 shadow-sm border border-amber-100 mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold text-gray-900">My Hive Partners</h3>
+      <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 mb-6 sm:mb-8">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900">My Hive Partners</h3>
           <button
             onClick={() => navigate('/community')}
-            className="text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1 transition-colors"
+            className="text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1 transition-colors text-sm sm:text-base"
           >
             View All
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,83 +146,83 @@ function Dashboard() {
             </svg>
           </button>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex -space-x-3">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+          <div className="flex -space-x-2 sm:-space-x-3">
             {connectedHivekeepers.map((keeper, index) => (
               <img
                 key={keeper.id}
                 src={keeper.photo}
                 alt={keeper.name}
                 title={keeper.name}
-                className="w-12 h-12 rounded-full object-cover border-2 border-white cursor-pointer hover:scale-110 hover:z-10 transition-transform"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover border-2 border-white cursor-pointer hover:scale-110 hover:z-10 transition-transform"
                 style={{ zIndex: connectedHivekeepers.length - index }}
                 onClick={() => navigate(`/profile/${keeper.id}`)}
               />
             ))}
             {totalConnected > connectedHivekeepers.length && (
               <div
-                className="w-12 h-12 rounded-full bg-amber-100 border-2 border-white flex items-center justify-center cursor-pointer hover:bg-amber-200 transition-colors"
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-amber-100 border-2 border-white flex items-center justify-center cursor-pointer hover:bg-amber-200 transition-colors"
                 onClick={() => navigate('/community')}
               >
-                <span className="text-amber-700 font-medium text-sm">
+                <span className="text-amber-700 font-medium text-xs sm:text-sm">
                   +{totalConnected - connectedHivekeepers.length}
                 </span>
               </div>
             )}
           </div>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-xs sm:text-sm">
             Leaders you've connected with for collaboration and cross-pollination
           </p>
         </div>
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-amber-100">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h3>
-          <div className="space-y-3">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Recent Activity</h3>
+          <div className="space-y-2 sm:space-y-3">
             {recentActivity.map((activity, i) => (
               <div
                 key={i}
-                className="flex items-center gap-4 p-3 rounded-xl hover:bg-amber-50 transition-colors cursor-pointer"
+                className="flex items-start sm:items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl hover:bg-amber-50 transition-colors cursor-pointer"
                 onClick={() => activity.user && navigate(`/profile/${activity.user.id}`)}
               >
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                   {activity.user ? (
                     <img
                       src={activity.user.photo}
                       alt={activity.user.name}
-                      className="w-10 h-10 rounded-full object-cover"
+                      className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white">
+                    <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white text-sm">
                       {activity.icon}
                     </div>
                   )}
-                  <span className="absolute -bottom-1 -right-1 text-sm">{activity.icon}</span>
+                  <span className="absolute -bottom-1 -right-1 text-xs sm:text-sm">{activity.icon}</span>
                 </div>
-                <div className="flex-1">
-                  <p className="text-gray-900">
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-900 text-sm sm:text-base">
                     {activity.user && (
                       <span className="font-medium">{activity.user.name} </span>
                     )}
                     {activity.action}
                   </p>
-                  <p className="text-sm text-amber-600">{activity.time}</p>
+                  <p className="text-xs sm:text-sm text-amber-600">{activity.time}</p>
                 </div>
                 {activity.type === 'connection_request' && (
-                  <div className="flex gap-2">
-                    <button className="px-3 py-1 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all">
+                  <div className="flex gap-1.5 sm:gap-2 flex-shrink-0">
+                    <button className="px-2.5 py-1 sm:px-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-xs sm:text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all">
                       Accept
                     </button>
-                    <button className="px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-sm font-medium hover:bg-gray-200 transition-all">
+                    <button className="px-2.5 py-1 sm:px-3 bg-gray-100 text-gray-600 rounded-lg text-xs sm:text-sm font-medium hover:bg-gray-200 transition-all">
                       Decline
                     </button>
                   </div>
                 )}
                 {activity.type === 'cross_pollination' && (
-                  <button className="px-3 py-1 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-all">
+                  <button className="px-2.5 py-1 sm:px-3 bg-amber-100 text-amber-700 rounded-lg text-xs sm:text-sm font-medium hover:bg-amber-200 transition-all flex-shrink-0">
                     View
                   </button>
                 )}
@@ -232,43 +232,43 @@ function Dashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-amber-100">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h3>
-          <div className="space-y-3">
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Quick Actions</h3>
+          <div className="space-y-2 sm:space-y-3">
             <button
               onClick={() => navigate('/community')}
-              className="w-full p-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
+              className="w-full p-2.5 sm:p-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl text-sm sm:text-base font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
             >
               <span>🗺️</span>
               Explore Hivekeepers
             </button>
             <button
               onClick={() => navigate('/events')}
-              className="w-full p-3 bg-amber-100 text-amber-700 rounded-xl font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2"
+              className="w-full p-2.5 sm:p-3 bg-amber-100 text-amber-700 rounded-xl text-sm sm:text-base font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2"
             >
               <span>📅</span>
               Create Event
             </button>
             <button
               onClick={() => navigate('/collaborate')}
-              className="w-full p-3 bg-amber-100 text-amber-700 rounded-xl font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2"
+              className="w-full p-2.5 sm:p-3 bg-amber-100 text-amber-700 rounded-xl text-sm sm:text-base font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2"
             >
               <span>🐝</span>
               Request Cross-pollination
             </button>
             <button
               onClick={() => navigate('/messages')}
-              className="w-full p-3 bg-amber-100 text-amber-700 rounded-xl font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2 relative"
+              className="w-full p-2.5 sm:p-3 bg-amber-100 text-amber-700 rounded-xl text-sm sm:text-base font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2 relative"
             >
               <span>💬</span>
               Messages
-              <span className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+              <span className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 sm:w-5 sm:h-5 bg-red-500 text-white text-[10px] sm:text-xs rounded-full flex items-center justify-center">
                 2
               </span>
             </button>
             <button
               onClick={() => navigate('/profile/edit')}
-              className="w-full p-3 bg-amber-100 text-amber-700 rounded-xl font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2"
+              className="w-full p-2.5 sm:p-3 bg-amber-100 text-amber-700 rounded-xl text-sm sm:text-base font-medium hover:bg-amber-200 transition-all flex items-center justify-center gap-2"
             >
               <span>✏️</span>
               Update My Profile
@@ -278,13 +278,13 @@ function Dashboard() {
       </div>
 
       {/* Hive Size Legend */}
-      <div className="mt-8 bg-amber-50 rounded-2xl p-6 border border-amber-100">
-        <h4 className="font-semibold text-gray-900 mb-3">Hive Size Categories</h4>
-        <div className="flex flex-wrap gap-4">
+      <div className="mt-6 sm:mt-8 bg-amber-50 rounded-2xl p-4 sm:p-6 border border-amber-100">
+        <h4 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">Hive Size Categories</h4>
+        <div className="flex flex-wrap gap-x-4 gap-y-2 sm:gap-4">
           {Object.entries(hiveSizeInfo).map(([size, info]) => (
-            <div key={size} className="flex items-center gap-2">
-              <span className={`font-medium ${info.color}`}>{size}</span>
-              <span className="text-gray-500 text-sm">({info.label})</span>
+            <div key={size} className="flex items-center gap-1.5 sm:gap-2">
+              <span className={`font-medium text-sm sm:text-base ${info.color}`}>{size}</span>
+              <span className="text-gray-500 text-xs sm:text-sm">({info.label})</span>
             </div>
           ))}
         </div>

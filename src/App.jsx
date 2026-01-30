@@ -5,6 +5,7 @@ import Community from './pages/Community';
 import Events from './pages/Events';
 import Resources from './pages/Resources';
 import Profile from './pages/Profile';
+import Messages from './pages/Messages';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="community" element={<Community />} />
           <Route path="events" element={<Events />} />
           <Route path="resources" element={<Resources />} />
+          <Route path="messages" element={<Messages />} />
           <Route path="profile/:id" element={<Profile />} />
         </Route>
       </Routes>
