@@ -10,10 +10,18 @@ const getLastActive = (daysAgo) => {
   return `Last active ${Math.floor(daysAgo / 7)} week${daysAgo >= 14 ? 's' : ''} ago`;
 };
 
+// Get relative time for requests
+const getTimeAgo = (days) => {
+  if (days === 0) return 'Today';
+  if (days === 1) return 'Yesterday';
+  return `${days} days ago`;
+};
+
 function Connections() {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
+  const [requestFilter, setRequestFilter] = useState('all');
 
   // Handle smooth scroll to section on load or hash change
   useEffect(() => {
@@ -29,41 +37,60 @@ function Connections() {
     }
   }, [location.hash]);
 
-  // Pending connection requests
+  // Pending requests - now with type differentiation
   const [pendingRequests, setPendingRequests] = useState([
     {
       id: 1,
+      type: 'connection',
       name: 'Luna Morales',
       message: "Your work on conscious leadership resonates deeply with my art integration practice. I'd love to explore collaboration opportunities around creative expression and community building.",
       receivedDays: 2,
     },
     {
       id: 2,
+      type: 'cross-pollination',
+      name: 'David Rivera',
+      eventTitle: 'Full Moon Gathering',
+      eventDate: 'Feb 1, 2026',
+      message: "I'd love to share this with my community, it aligns perfectly with our values around earth-based practices and seasonal celebrations.",
+      receivedDays: 3,
+    },
+    {
+      id: 3,
+      type: 'connection',
       name: 'Jordan Ellis',
       message: "I've been following your community's growth and love what you're building. Would love to connect and share experiences about growing conscious communities.",
       receivedDays: 3,
     },
     {
-      id: 3,
+      id: 4,
+      type: 'cross-pollination',
       name: 'River Stone',
-      message: "Fellow earth-based practitioner here! I noticed we share similar values around land connection and ceremony. Let's connect and explore synergies.",
+      eventTitle: 'Mindfulness Morning',
+      eventDate: 'Feb 2, 2026',
+      message: "This would be perfect for my land-based community. Many of my members are looking for mindfulness practices to complement our outdoor work.",
       receivedDays: 5,
+    },
+    {
+      id: 5,
+      type: 'connection',
+      name: 'Priya Sharma',
+      message: "Fellow earth-based practitioner here! I noticed we share similar values around land connection and ceremony. Let's connect and explore synergies.",
+      receivedDays: 6,
     },
   ]);
 
   // Connected hivekeepers (using existing data)
   const connectedHivekeepers = [
     { ...hivekeepers.find(h => h.name === 'Maya Chen'), lastActiveDays: 0, connectedSince: '2024-06' },
-    { ...hivekeepers.find(h => h.name === 'David Rivera'), lastActiveDays: 1, connectedSince: '2024-08' },
     { ...hivekeepers.find(h => h.name === 'Sarah Johnson'), lastActiveDays: 2, connectedSince: '2024-05' },
     { ...hivekeepers.find(h => h.name === 'Alex Kim'), lastActiveDays: 4, connectedSince: '2024-09' },
     { ...hivekeepers.find(h => h.name === 'Marcus Thompson'), lastActiveDays: 1, connectedSince: '2024-07' },
-    { ...hivekeepers.find(h => h.name === 'Priya Sharma'), lastActiveDays: 3, connectedSince: '2024-10' },
     { ...hivekeepers.find(h => h.name === 'Amara Okafor'), lastActiveDays: 0, connectedSince: '2024-04' },
     { ...hivekeepers.find(h => h.name === 'Kai Nakamura'), lastActiveDays: 6, connectedSince: '2024-11' },
   ].filter(Boolean);
 
-  // Active collaborations
+  // Active collaborations (cross-pollinations only, removed co-hosting)
   const [activeCollaborations] = useState([
     {
       id: 1,
@@ -76,14 +103,24 @@ function Connections() {
     },
     {
       id: 2,
-      type: 'co-hosting',
-      typeLabel: '🤝 Co-hosting',
-      partnerName: 'David Rivera',
-      title: 'Regenerative Living Retreat',
+      type: 'cross-pollination',
+      typeLabel: '🐝 Cross-pollination',
+      partnerName: 'Sarah Johnson',
+      title: 'Full Moon Ceremony',
       status: 'In planning phase',
       statusColor: 'text-amber-700 bg-amber-100',
     },
   ]);
+
+  // Filter counts
+  const connectionRequests = pendingRequests.filter(r => r.type === 'connection');
+  const crossPollinationRequests = pendingRequests.filter(r => r.type === 'cross-pollination');
+
+  // Filter pending requests
+  const filteredRequests = pendingRequests.filter(request => {
+    if (requestFilter === 'all') return true;
+    return request.type === requestFilter;
+  });
 
   // Filter connected hivekeepers by search
   const filteredConnections = connectedHivekeepers.filter(keeper =>
@@ -92,13 +129,13 @@ function Connections() {
     keeper.hives?.some(h => h.name.toLowerCase().includes(searchQuery.toLowerCase()))
   );
 
-  // Handle accepting a connection
+  // Handle accepting a request
   const handleAccept = (requestId) => {
     setPendingRequests(prev => prev.filter(r => r.id !== requestId));
-    // In a real app, this would add them to connected list
+    // In a real app, this would add them to connected list or confirm cross-pollination
   };
 
-  // Handle declining a connection
+  // Handle declining a request
   const handleDecline = (requestId) => {
     setPendingRequests(prev => prev.filter(r => r.id !== requestId));
   };
@@ -127,7 +164,7 @@ function Connections() {
 
       {/* Pending Requests Section */}
       <section id="pending-requests" className="mb-10 scroll-mt-20">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
           <h2 className="text-xl font-bold text-gray-900">
             Pending Requests
             {pendingRequests.length > 0 && (
@@ -138,73 +175,142 @@ function Connections() {
           </h2>
         </div>
 
-        {pendingRequests.length > 0 ? (
+        {/* Filter Tabs */}
+        <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 mb-4">
+          <button
+            onClick={() => setRequestFilter('all')}
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+              requestFilter === 'all'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+            }`}
+          >
+            All ({pendingRequests.length})
+          </button>
+          <button
+            onClick={() => setRequestFilter('connection')}
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
+              requestFilter === 'connection'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+            }`}
+          >
+            <span>🤝</span>
+            Connections ({connectionRequests.length})
+          </button>
+          <button
+            onClick={() => setRequestFilter('cross-pollination')}
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
+              requestFilter === 'cross-pollination'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+            }`}
+          >
+            <span>🐝</span>
+            Cross-pollinations ({crossPollinationRequests.length})
+          </button>
+        </div>
+
+        {filteredRequests.length > 0 ? (
           <div className="space-y-4">
-            {pendingRequests.map(request => {
+            {filteredRequests.map(request => {
               const requester = getHivekeeperByName(request.name);
               const primaryHive = requester?.hives?.[0];
+              const isConnection = request.type === 'connection';
 
               return (
                 <div
                   key={request.id}
-                  className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6"
+                  className="bg-white rounded-2xl shadow-sm border border-amber-100 overflow-hidden"
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-                    {/* Profile */}
-                    <div className="flex items-center gap-4 flex-shrink-0">
-                      {requester && (
-                        <img
-                          src={requester.photo}
-                          alt={requester.name}
-                          className="w-14 h-14 rounded-full object-cover border-2 border-amber-200 cursor-pointer hover:scale-105 transition-transform"
-                          onClick={() => navigate(`/profile/${requester.id}`)}
-                        />
-                      )}
-                      <div className="sm:hidden">
-                        <h3 className="font-semibold text-gray-900">{request.name}</h3>
-                        {primaryHive && (
-                          <p className="text-sm text-amber-600">{primaryHive.name}</p>
+                  {/* Type Badge Header */}
+                  <div className={`px-5 py-2 ${isConnection ? 'bg-green-50' : 'bg-orange-100'}`}>
+                    <span className={`inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold ${isConnection ? 'text-green-700' : 'text-orange-700'}`}>
+                      <span>{isConnection ? '🤝' : '🐝'}</span>
+                      {isConnection ? 'CONNECTION REQUEST' : 'CROSS-POLLINATION REQUEST'}
+                    </span>
+                  </div>
+
+                  <div className="p-5 sm:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-start gap-4">
+                      {/* Profile */}
+                      <div className="flex items-center gap-4 flex-shrink-0">
+                        {requester && (
+                          <img
+                            src={requester.photo}
+                            alt={requester.name}
+                            className="w-14 h-14 rounded-full object-cover border-2 border-amber-200 cursor-pointer hover:scale-105 transition-transform"
+                            onClick={() => navigate(`/profile/${requester.id}`)}
+                          />
                         )}
+                        <div className="sm:hidden">
+                          <h3 className="font-semibold text-gray-900">{request.name}</h3>
+                          {primaryHive && (
+                            <p className="text-sm text-amber-600">{primaryHive.name}</p>
+                          )}
+                          <p className="text-xs text-gray-400 mt-0.5">{getTimeAgo(request.receivedDays)}</p>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 min-w-0">
+                        <div className="hidden sm:flex sm:items-start sm:justify-between mb-2">
+                          <div>
+                            <h3 className="font-semibold text-gray-900">{request.name}</h3>
+                            {primaryHive && (
+                              <p className="text-sm text-amber-600">{primaryHive.name}</p>
+                            )}
+                          </div>
+                          <p className="text-xs text-gray-400 flex-shrink-0">
+                            {getTimeAgo(request.receivedDays)}
+                          </p>
+                        </div>
+
+                        {/* Cross-pollination specific: Event info */}
+                        {!isConnection && request.eventTitle && (
+                          <div className="mb-3 p-3 bg-orange-50 rounded-xl border border-orange-200">
+                            <p className="text-xs text-orange-600 font-medium mb-1">Wants to share with their hive:</p>
+                            <div className="flex items-center gap-2">
+                              <span>📅</span>
+                              <span className="font-semibold text-gray-900">"{request.eventTitle}"</span>
+                              <span className="text-sm text-gray-500">({request.eventDate})</span>
+                            </div>
+                          </div>
+                        )}
+
+                        <p className="text-gray-600 text-sm mb-4 italic">"{request.message}"</p>
+
+                        {/* Actions */}
+                        <div className="flex flex-wrap gap-2">
+                          <button
+                            onClick={() => handleAccept(request.id)}
+                            className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
+                          >
+                            Accept
+                          </button>
+                          <button
+                            onClick={() => handleDecline(request.id)}
+                            className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-all"
+                          >
+                            Decline
+                          </button>
+                          <button
+                            onClick={() => requester && navigate(`/profile/${requester.id}`)}
+                            className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-all"
+                          >
+                            View Profile
+                          </button>
+                          {!isConnection && (
+                            <button
+                              onClick={() => navigate('/events')}
+                              className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-all"
+                            >
+                              View Event
+                            </button>
+                          )}
+                        </div>
                       </div>
                     </div>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="hidden sm:block mb-2">
-                        <h3 className="font-semibold text-gray-900">{request.name}</h3>
-                        {primaryHive && (
-                          <p className="text-sm text-amber-600">{primaryHive.name}</p>
-                        )}
-                      </div>
-                      <p className="text-gray-600 text-sm mb-4 italic">"{request.message}"</p>
-
-                      {/* Actions */}
-                      <div className="flex flex-wrap gap-2">
-                        <button
-                          onClick={() => handleAccept(request.id)}
-                          className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
-                        >
-                          Accept
-                        </button>
-                        <button
-                          onClick={() => handleDecline(request.id)}
-                          className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-200 transition-all"
-                        >
-                          Decline
-                        </button>
-                        <button
-                          onClick={() => requester && navigate(`/profile/${requester.id}`)}
-                          className="px-4 py-2 bg-amber-100 text-amber-700 rounded-lg text-sm font-medium hover:bg-amber-200 transition-all"
-                        >
-                          View Profile
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Time */}
-                    <p className="text-xs text-gray-400 flex-shrink-0 hidden sm:block">
-                      {request.receivedDays === 0 ? 'Today' : request.receivedDays === 1 ? 'Yesterday' : `${request.receivedDays} days ago`}
-                    </p>
                   </div>
                 </div>
               );
@@ -212,7 +318,13 @@ function Connections() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-8 text-center">
-            <p className="text-gray-500">No pending requests</p>
+            <p className="text-gray-500">
+              {requestFilter === 'all'
+                ? 'No pending requests'
+                : requestFilter === 'connection'
+                  ? 'No pending connection requests'
+                  : 'No pending cross-pollination requests'}
+            </p>
           </div>
         )}
       </section>
@@ -326,7 +438,7 @@ function Connections() {
                   className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6"
                 >
                   {/* Type Badge */}
-                  <span className="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-medium mb-3">
+                  <span className="inline-block px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-medium mb-3">
                     {collab.typeLabel}
                   </span>
 
