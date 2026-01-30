@@ -9,24 +9,29 @@ const getHostByName = (name) => {
 
 // Category configuration
 const categoryConfig = {
-  'hivekeeper-only': {
-    icon: '🔒',
-    label: 'Hivekeeper Only',
-    shortLabel: 'Hivekeeper',
-    color: 'bg-purple-100 text-purple-700 border-purple-200'
-  },
   'cross-pollination': {
     icon: '🐝',
     label: 'Open for Cross-pollination',
     shortLabel: 'Cross-pollination',
     color: 'bg-amber-100 text-amber-700 border-amber-200'
   },
-  'open': {
-    icon: '🌍',
-    label: 'Open Event',
-    shortLabel: 'Open',
-    color: 'bg-green-100 text-green-700 border-green-200'
+  'hivekeeper-only': {
+    icon: '🔒',
+    label: 'Hivekeeper Only',
+    shortLabel: 'Hivekeeper',
+    color: 'bg-purple-100 text-purple-700 border-purple-200'
   },
+};
+
+// Mock data: How many of your events each hivekeeper has shared
+const pollinationHistory = {
+  'Maya Chen': 2,
+  'David Rivera': 1,
+  'Sarah Johnson': 3,
+  'Jordan Ellis': 0,
+  'Luna Morales': 1,
+  'Alex Kim': 0,
+  'Amara Okafor': 2,
 };
 
 function Events() {
@@ -88,7 +93,7 @@ function Events() {
       host: 'David Rivera',
       type: 'Workshop',
       isOnline: false,
-      category: 'open',
+      category: 'cross-pollination',
       sharingHivekeepers: [],
       description: 'Learn the fundamentals of permaculture design in this hands-on workshop. We\'ll cover soil health, companion planting, water management, and creating sustainable food systems in urban environments.',
     },
@@ -141,6 +146,11 @@ function Events() {
     Workshop: 'bg-green-100 text-green-700',
     Healing: 'bg-pink-100 text-pink-700',
     Discussion: 'bg-amber-100 text-amber-700',
+  };
+
+  // Get pollination history for a host
+  const getPollinationHistory = (hostName) => {
+    return pollinationHistory[hostName] || 0;
   };
 
   // Filter events
@@ -267,17 +277,6 @@ function Events() {
             <span className="sm:hidden">Hivekeeper</span>
           </button>
           <button
-            onClick={() => setSelectedCategory('open')}
-            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
-              selectedCategory === 'open'
-                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
-            }`}
-          >
-            <span>🌍</span>
-            <span>Open Events</span>
-          </button>
-          <button
             onClick={() => setSelectedCategory('my-events')}
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               selectedCategory === 'my-events'
@@ -338,6 +337,7 @@ function Events() {
           const isInterested = interestedEvents.includes(event.id);
           const category = categoryConfig[event.category];
           const sharingCount = event.sharingHivekeepers?.length || 0;
+          const hostSharedYours = getPollinationHistory(event.host);
 
           return (
             <div
@@ -421,6 +421,14 @@ function Events() {
                 </div>
               )}
 
+              {/* Pollination history hint */}
+              {event.category === 'cross-pollination' && hostSharedYours > 0 && !isInterested && (
+                <p className="text-xs text-amber-600 mb-3 flex items-center gap-1">
+                  <span>💡</span>
+                  {host?.name.split(' ')[0]} has shared {hostSharedYours} of your event{hostSharedYours !== 1 ? 's' : ''}
+                </p>
+              )}
+
               <div className="flex gap-2 sm:gap-3">
                 {event.category === 'cross-pollination' && (
                   isInterested ? (
@@ -440,8 +448,7 @@ function Events() {
                       className="flex-1 px-3 py-2 sm:px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl text-sm sm:text-base font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-1"
                     >
                       <span>🐝</span>
-                      <span className="hidden sm:inline">Cross-pollinate</span>
-                      <span className="sm:hidden">Pollinate</span>
+                      <span>Cross-pollinate</span>
                     </button>
                   )
                 )}
@@ -547,7 +554,6 @@ function Events() {
                   >
                     <option value="cross-pollination">🐝 Open for Cross-pollination</option>
                     <option value="hivekeeper-only">🔒 Hivekeeper Only</option>
-                    <option value="open">🌍 Open Event</option>
                   </select>
                 </div>
               </div>
@@ -620,6 +626,7 @@ function Events() {
               const isInterested = interestedEvents.includes(event.id);
               const category = categoryConfig[event.category];
               const sharingCount = event.sharingHivekeepers?.length || 0;
+              const hostSharedYours = getPollinationHistory(event.host);
 
               return (
                 <>
@@ -696,53 +703,44 @@ function Events() {
                       </div>
                     </div>
 
-                    {/* Cross-pollination Opportunity Section */}
+                    {/* Cross-pollination Section */}
                     {event.category === 'cross-pollination' && (
                       <div className="mb-6 p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200">
                         <h4 className="font-semibold text-amber-800 mb-3 flex items-center gap-2">
-                          <span>🐝</span> Cross-pollination Opportunity
+                          <span>🐝</span> Cross-pollination
                         </h4>
                         <p className="text-sm text-gray-700 mb-3">
-                          {host?.name.split(' ')[0]} welcomes other hives to share this event with their communities. The more hives that share, the bigger the impact!
+                          {host?.name.split(' ')[0]} welcomes other hives to share this event. The more hives that share, the bigger the impact!
                         </p>
 
                         {/* Hivekeepers sharing this */}
                         {sharingCount > 0 && (
                           <div className="mb-3">
                             <p className="text-xs text-amber-700 font-medium mb-2">Hivekeepers sharing this:</p>
-                            <div className="flex -space-x-2">
-                              {event.sharingHivekeepers.slice(0, 5).map((name, idx) => {
-                                const hk = hivekeepers.find(h => h.name === name);
-                                return hk ? (
-                                  <img
-                                    key={idx}
-                                    src={hk.photo}
-                                    alt={hk.name}
-                                    title={hk.name}
-                                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
-                                  />
-                                ) : null;
-                              })}
-                              {sharingCount > 5 && (
-                                <div className="w-8 h-8 rounded-full bg-amber-200 border-2 border-white flex items-center justify-center text-xs font-medium text-amber-800">
-                                  +{sharingCount - 5}
-                                </div>
-                              )}
+                            <div className="flex items-center gap-2">
+                              <div className="flex -space-x-2">
+                                {event.sharingHivekeepers.slice(0, 5).map((name, idx) => {
+                                  const hk = hivekeepers.find(h => h.name === name);
+                                  return hk ? (
+                                    <img
+                                      key={idx}
+                                      src={hk.photo}
+                                      alt={hk.name}
+                                      title={hk.name}
+                                      className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                                    />
+                                  ) : null;
+                                })}
+                                {sharingCount > 5 && (
+                                  <div className="w-8 h-8 rounded-full bg-amber-200 border-2 border-white flex items-center justify-center text-xs font-medium text-amber-800">
+                                    +{sharingCount - 5}
+                                  </div>
+                                )}
+                              </div>
+                              <span className="text-sm text-amber-700">{sharingCount} sharing</span>
                             </div>
                           </div>
                         )}
-
-                        {/* What you get/give */}
-                        <div className="grid grid-cols-2 gap-3 text-xs">
-                          <div className="p-2 bg-white rounded-lg">
-                            <p className="font-medium text-green-700 mb-1">What you get:</p>
-                            <p className="text-gray-600">Your hive gets access to this event</p>
-                          </div>
-                          <div className="p-2 bg-white rounded-lg">
-                            <p className="font-medium text-amber-700 mb-1">What you give:</p>
-                            <p className="text-gray-600">Promote to your community</p>
-                          </div>
-                        </div>
                       </div>
                     )}
 
@@ -750,6 +748,14 @@ function Events() {
                       <h4 className="font-semibold text-gray-900 mb-2">About this event</h4>
                       <p className="text-gray-600 leading-relaxed">{event.description}</p>
                     </div>
+
+                    {/* Pollination history hint in modal */}
+                    {event.category === 'cross-pollination' && hostSharedYours > 0 && !isInterested && (
+                      <p className="text-sm text-amber-600 mb-4 flex items-center gap-1">
+                        <span>💡</span>
+                        {host?.name.split(' ')[0]} has shared {hostSharedYours} of your event{hostSharedYours !== 1 ? 's' : ''}
+                      </p>
+                    )}
 
                     <div className="flex gap-3">
                       {event.category === 'cross-pollination' && (
@@ -778,7 +784,7 @@ function Events() {
                             className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
                           >
                             <span>🐝</span>
-                            Share with My Hive
+                            Cross-pollinate
                           </button>
                         )
                       )}
@@ -799,64 +805,98 @@ function Events() {
         </div>
       )}
 
-      {/* Cross-pollination Request Modal */}
+      {/* Cross-pollination Modal */}
       {showCrossPollinateModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-md w-full">
             {!requestSent ? (
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl">🐝</span>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900">Share with Your Hive</h3>
-                    <p className="text-sm text-gray-500">{showCrossPollinateModal.title}</p>
+              (() => {
+                const host = getHostByName(showCrossPollinateModal.host);
+                const hostSharedYours = getPollinationHistory(showCrossPollinateModal.host);
+
+                return (
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl">🐝</span>
+                        <h3 className="text-xl font-bold text-gray-900">Cross-pollinate this Event</h3>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setShowCrossPollinateModal(null);
+                          setCrossPollinationMessage('');
+                        }}
+                        className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Event info */}
+                    <div className="mb-4 p-4 bg-amber-50 rounded-xl border border-amber-200">
+                      <p className="font-semibold text-gray-900 mb-1">"{showCrossPollinateModal.title}"</p>
+                      <p className="text-sm text-amber-700">Hosted by {host?.name}</p>
+                    </div>
+
+                    {/* Commitment message */}
+                    <p className="text-gray-600 text-sm mb-4">
+                      You're committing to share this event with your community on your platform (Skool, WhatsApp, Telegram, etc.)
+                    </p>
+
+                    {/* Pollination history hint */}
+                    {hostSharedYours > 0 && (
+                      <div className="mb-4 p-3 bg-green-50 rounded-xl border border-green-200">
+                        <p className="text-sm text-green-700 flex items-center gap-2">
+                          <span>💡</span>
+                          {host?.name.split(' ')[0]} has shared {hostSharedYours} of your event{hostSharedYours !== 1 ? 's' : ''}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Optional message */}
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                        Add a message (optional)
+                      </label>
+                      <textarea
+                        value={crossPollinationMessage}
+                        onChange={(e) => setCrossPollinationMessage(e.target.value)}
+                        placeholder={`Hi ${host?.name.split(' ')[0]}! I'd love to share this with my community...`}
+                        className="w-full h-24 p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none text-sm"
+                      />
+                    </div>
+
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => {
+                          setShowCrossPollinateModal(null);
+                          setCrossPollinationMessage('');
+                        }}
+                        className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        onClick={() => handleCrossPollinateRequest(showCrossPollinateModal.id)}
+                        className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
+                      >
+                        <span>🐝</span>
+                        Confirm
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <div className="bg-amber-50 p-4 rounded-xl mb-4 border border-amber-200">
-                  <p className="text-sm text-amber-800">
-                    <strong>Cross-pollination</strong> means partnering with {getHostByName(showCrossPollinateModal.host)?.name.split(' ')[0]} to share this event with your hive. Your community gets access, and you help spread the word!
-                  </p>
-                </div>
-
-                <p className="text-gray-600 mb-4 text-sm">
-                  Tell {getHostByName(showCrossPollinateModal.host)?.name.split(' ')[0]} about your hive and why you'd like to cross-pollinate:
-                </p>
-
-                <textarea
-                  value={crossPollinationMessage}
-                  onChange={(e) => setCrossPollinationMessage(e.target.value)}
-                  placeholder={`Hi! I run [Your Hive Name] and I think my community would love this event because...`}
-                  className="w-full h-28 p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none text-sm"
-                />
-
-                <div className="flex gap-3 mt-4">
-                  <button
-                    onClick={() => {
-                      setShowCrossPollinateModal(null);
-                      setCrossPollinationMessage('');
-                    }}
-                    className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => handleCrossPollinateRequest(showCrossPollinateModal.id)}
-                    className="flex-1 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
-                  >
-                    <span>🐝</span>
-                    Send Request
-                  </button>
-                </div>
-              </div>
+                );
+              })()
             ) : (
               <div className="p-6 text-center py-10">
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl">🐝</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Request Sent!</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Cross-pollination request sent!</h3>
                 <p className="text-gray-600">
-                  {getHostByName(showCrossPollinateModal.host)?.name.split(' ')[0]} will review your cross-pollination request.
+                  {getHostByName(showCrossPollinateModal.host)?.name.split(' ')[0]} will review your request.
                 </p>
               </div>
             )}
