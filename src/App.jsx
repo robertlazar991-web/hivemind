@@ -6,6 +6,8 @@ import Events from './pages/Events';
 import Collaborate from './pages/Collaborate';
 import Visions from './pages/Visions';
 import Profile from './pages/Profile';
+import MyProfile from './pages/MyProfile';
+import EditProfile from './pages/EditProfile';
 import Messages from './pages/Messages';
 import Connections from './pages/Connections';
 
@@ -22,6 +24,8 @@ function App() {
           <Route path="messages" element={<Messages />} />
           <Route path="connections" element={<Connections />} />
           <Route path="profile/:id" element={<Profile />} />
+          <Route path="my-profile" element={<MyProfile />} />
+          <Route path="profile/edit" element={<EditProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

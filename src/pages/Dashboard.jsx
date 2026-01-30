@@ -9,18 +9,9 @@ function Dashboard() {
     name: 'Sarah',
     photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop',
     hiveName: 'Consciousness Collective',
-    hiveSize: 'Growing',
+    hiveSize: '50 - 150 members',
     hivePlatform: 'Skool',
     hiveLink: 'https://skool.com/consciousness-collective',
-  };
-
-  // Hive size categories
-  const hiveSizeInfo = {
-    Seedling: { label: 'Under 50 members', color: 'text-emerald-600' },
-    Growing: { label: '50-150 members', color: 'text-blue-600' },
-    Thriving: { label: '150-500 members', color: 'text-purple-600' },
-    Flourishing: { label: '500-1,500 members', color: 'text-amber-600' },
-    Established: { label: '1,500+ members', color: 'text-orange-600' },
   };
 
   // Connected hivekeepers (sample data)
@@ -80,14 +71,20 @@ function Dashboard() {
           <img
             src={currentUser.photo}
             alt={currentUser.name}
-            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-3 border-amber-400 flex-shrink-0"
+            onClick={() => navigate('/my-profile')}
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-full object-cover border-3 border-amber-400 flex-shrink-0 cursor-pointer hover:scale-105 transition-transform"
           />
           <div className="min-w-0">
-            <h2 className="text-xl sm:text-3xl font-bold text-gray-900">Welcome back, {currentUser.name}</h2>
+            <h2
+              onClick={() => navigate('/my-profile')}
+              className="text-xl sm:text-3xl font-bold text-gray-900 cursor-pointer hover:text-amber-700 transition-colors"
+            >
+              Welcome back, {currentUser.name}
+            </h2>
             <div className="flex items-center gap-1.5 sm:gap-2 mt-1 flex-wrap text-sm sm:text-base">
               <span className="text-amber-700 font-medium">My Hive: {currentUser.hiveName}</span>
               <span className="text-gray-400 hidden sm:inline">•</span>
-              <span className={`font-medium ${hiveSizeInfo[currentUser.hiveSize].color}`}>
+              <span className="font-medium text-blue-600">
                 {currentUser.hiveSize}
               </span>
               <span className="text-gray-400 hidden sm:inline">•</span>
@@ -148,7 +145,7 @@ function Dashboard() {
       </div>
 
       {/* Cross-pollination Activity Section */}
-      <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-200 mb-6 sm:mb-8">
+      <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 mb-6 sm:mb-8">
         <div className="flex items-center justify-between mb-3 sm:mb-4">
           <h3 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
             <span>🐝</span>
@@ -159,13 +156,13 @@ function Dashboard() {
           <div className="flex items-center gap-3">
             <span className="text-lg">🐝</span>
             <p className="text-gray-700 text-sm sm:text-base">
-              You've shared <span className="font-bold text-amber-700">{pollinationStats.eventsShared}</span> events
+              You've pollinated <span className="font-bold text-amber-700">{pollinationStats.eventsShared}</span> events
             </p>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-lg">🌸</span>
             <p className="text-gray-700 text-sm sm:text-base">
-              <span className="font-bold text-amber-700">{pollinationStats.eventsReceivedFromOthers}</span> of your events were shared
+              <span className="font-bold text-amber-700">{pollinationStats.eventsReceivedFromOthers}</span> of your events were pollinated
             </p>
           </div>
         </div>
@@ -322,19 +319,6 @@ function Dashboard() {
               Update My Profile
             </button>
           </div>
-        </div>
-      </div>
-
-      {/* Hive Size Legend */}
-      <div className="mt-6 sm:mt-8 bg-amber-50 rounded-2xl p-4 sm:p-6 border border-amber-100">
-        <h4 className="font-semibold text-gray-900 mb-2 sm:mb-3 text-sm sm:text-base">Hive Size Categories</h4>
-        <div className="flex flex-wrap gap-x-4 gap-y-2 sm:gap-4">
-          {Object.entries(hiveSizeInfo).map(([size, info]) => (
-            <div key={size} className="flex items-center gap-1.5 sm:gap-2">
-              <span className={`font-medium text-sm sm:text-base ${info.color}`}>{size}</span>
-              <span className="text-gray-500 text-xs sm:text-sm">({info.label})</span>
-            </div>
-          ))}
         </div>
       </div>
     </main>

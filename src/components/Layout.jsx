@@ -1,8 +1,28 @@
-import { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 
 function Layout() {
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef(null);
+
+  // Current user data
+  const currentUser = {
+    name: 'Sarah',
+    photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop',
+  };
+
+  // Close profile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setProfileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const navLinkClass = ({ isActive }) =>
     isActive
@@ -57,23 +77,96 @@ function Layout() {
               <NavLink to="/visions" className={navLinkClass}>
                 Visions
               </NavLink>
+
+              {/* Profile Dropdown */}
+              <div className="relative" ref={profileMenuRef}>
+                <button
+                  onClick={() => setProfileMenuOpen(!profileMenuOpen)}
+                  className="flex items-center gap-2 ml-2"
+                >
+                  <img
+                    src={currentUser.photo}
+                    alt={currentUser.name}
+                    className="w-9 h-9 rounded-full object-cover border-2 border-amber-300 hover:border-amber-500 transition-colors cursor-pointer"
+                  />
+                </button>
+
+                {/* Dropdown Menu */}
+                {profileMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-amber-100 py-2 z-50">
+                    <button
+                      onClick={() => {
+                        navigate('/my-profile');
+                        setProfileMenuOpen(false);
+                      }}
+                      className="w-full px-4 py-2.5 text-left text-gray-700 hover:bg-amber-50 flex items-center gap-3 transition-colors"
+                    >
+                      <span>👤</span>
+                      View My Profile
+                    </button>
+                    <button
+                      onClick={() => {
+                        navigate('/profile/edit');
+                        setProfileMenuOpen(false);
+                      }}
+                      className="w-full px-4 py-2.5 text-left text-gray-700 hover:bg-amber-50 flex items-center gap-3 transition-colors"
+                    >
+                      <span>✏️</span>
+                      Edit Profile
+                    </button>
+                    <div className="border-t border-amber-100 my-1" />
+                    <button
+                      onClick={() => setProfileMenuOpen(false)}
+                      className="w-full px-4 py-2.5 text-left text-gray-700 hover:bg-amber-50 flex items-center gap-3 transition-colors"
+                    >
+                      <span>⚙️</span>
+                      Settings
+                    </button>
+                    <button
+                      onClick={() => setProfileMenuOpen(false)}
+                      className="w-full px-4 py-2.5 text-left text-gray-700 hover:bg-amber-50 flex items-center gap-3 transition-colors"
+                    >
+                      <span>🚪</span>
+                      Log Out
+                    </button>
+                  </div>
+                )}
+              </div>
             </nav>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg hover:bg-amber-50 transition-colors relative"
-            >
-              <svg className="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
-              {/* Notification dot for messages */}
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full" />
-            </button>
+            {/* Mobile: Profile Photo + Menu Button */}
+            <div className="md:hidden flex items-center gap-2">
+              <button
+                onClick={() => {
+                  setProfileMenuOpen(!profileMenuOpen);
+                  setMobileMenuOpen(false);
+                }}
+                className="relative"
+              >
+                <img
+                  src={currentUser.photo}
+                  alt={currentUser.name}
+                  className="w-8 h-8 rounded-full object-cover border-2 border-amber-300"
+                />
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(!mobileMenuOpen);
+                  setProfileMenuOpen(false);
+                }}
+                className="p-2 rounded-lg hover:bg-amber-50 transition-colors relative"
+              >
+                <svg className="w-6 h-6 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+                {/* Notification dot for messages */}
+                <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-orange-500 rounded-full" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -154,6 +247,62 @@ function Layout() {
                 </span>
               </NavLink>
             </nav>
+          </div>
+        )}
+
+        {/* Mobile Profile Menu */}
+        {profileMenuOpen && (
+          <div className="md:hidden border-t border-amber-100 bg-white/95 backdrop-blur-sm">
+            <div className="max-w-7xl mx-auto px-4 py-3 space-y-1">
+              {/* User Info */}
+              <div className="flex items-center gap-3 px-4 py-3 border-b border-amber-100 mb-2">
+                <img
+                  src={currentUser.photo}
+                  alt={currentUser.name}
+                  className="w-10 h-10 rounded-full object-cover border-2 border-amber-300"
+                />
+                <div>
+                  <p className="font-medium text-gray-900">{currentUser.name}</p>
+                  <p className="text-xs text-amber-600">Hivekeeper</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => {
+                  navigate('/my-profile');
+                  setProfileMenuOpen(false);
+                }}
+                className="w-full px-4 py-3 text-left text-gray-700 hover:bg-amber-50 rounded-xl flex items-center gap-3 transition-colors"
+              >
+                <span>👤</span>
+                View My Profile
+              </button>
+              <button
+                onClick={() => {
+                  navigate('/profile/edit');
+                  setProfileMenuOpen(false);
+                }}
+                className="w-full px-4 py-3 text-left text-gray-700 hover:bg-amber-50 rounded-xl flex items-center gap-3 transition-colors"
+              >
+                <span>✏️</span>
+                Edit Profile
+              </button>
+              <div className="border-t border-amber-100 my-2" />
+              <button
+                onClick={() => setProfileMenuOpen(false)}
+                className="w-full px-4 py-3 text-left text-gray-700 hover:bg-amber-50 rounded-xl flex items-center gap-3 transition-colors"
+              >
+                <span>⚙️</span>
+                Settings
+              </button>
+              <button
+                onClick={() => setProfileMenuOpen(false)}
+                className="w-full px-4 py-3 text-left text-gray-700 hover:bg-amber-50 rounded-xl flex items-center gap-3 transition-colors"
+              >
+                <span>🚪</span>
+                Log Out
+              </button>
+            </div>
           </div>
         )}
       </header>
