@@ -51,8 +51,8 @@ function Layout() {
                 Messages
                 <span className="absolute -top-1 -right-3 w-2 h-2 bg-orange-500 rounded-full" />
               </NavLink>
-              <NavLink to="/resources" className={navLinkClass}>
-                Resources
+              <NavLink to="/visions" className={navLinkClass}>
+                Visions
               </NavLink>
             </nav>
 
@@ -131,13 +131,13 @@ function Layout() {
                 </span>
               </NavLink>
               <NavLink
-                to="/resources"
+                to="/visions"
                 className={mobileNavLinkClass}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="flex items-center gap-3">
-                  <span>📚</span>
-                  Resources
+                  <span>✨</span>
+                  Visions
                 </span>
               </NavLink>
             </nav>
