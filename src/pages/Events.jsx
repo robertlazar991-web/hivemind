@@ -7,14 +7,38 @@ const getHostByName = (name) => {
   return hivekeepers.find(h => h.name === name) || null;
 };
 
+// Category configuration
+const categoryConfig = {
+  'hivekeeper-only': {
+    icon: '🔒',
+    label: 'Hivekeeper Only',
+    shortLabel: 'Hivekeeper',
+    color: 'bg-purple-100 text-purple-700 border-purple-200'
+  },
+  'cross-pollination': {
+    icon: '🐝',
+    label: 'Open for Cross-pollination',
+    shortLabel: 'Cross-pollination',
+    color: 'bg-amber-100 text-amber-700 border-amber-200'
+  },
+  'open': {
+    icon: '🌍',
+    label: 'Open Event',
+    shortLabel: 'Open',
+    color: 'bg-green-100 text-green-700 border-green-200'
+  },
+};
+
 function Events() {
   const navigate = useNavigate();
-  const [selectedType, setSelectedType] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedFormat, setSelectedFormat] = useState('all');
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showDetailsModal, setShowDetailsModal] = useState(null);
-  const [showJoinModal, setShowJoinModal] = useState(null);
-  const [joinedEvents, setJoinedEvents] = useState([]);
+  const [showCrossPollinateModal, setShowCrossPollinateModal] = useState(null);
+  const [interestedEvents, setInterestedEvents] = useState([]);
+  const [crossPollinationMessage, setCrossPollinationMessage] = useState('');
+  const [requestSent, setRequestSent] = useState(false);
 
   // Form state for creating events
   const [newEvent, setNewEvent] = useState({
@@ -23,9 +47,10 @@ function Events() {
     time: '',
     location: '',
     type: 'Workshop',
+    category: 'cross-pollination',
     isOnline: false,
     description: '',
-    maxAttendees: 20,
+    crossPollinationSpots: 5,
   });
 
   const [events, setEvents] = useState([
@@ -36,10 +61,12 @@ function Events() {
       time: '7:00 PM',
       location: 'Riverside Park, Portland',
       host: 'Sarah Johnson',
-      attendees: 23,
-      maxAttendees: 30,
       type: 'Ceremony',
       isOnline: false,
+      category: 'cross-pollination',
+      crossPollinationSpots: 5,
+      interestedHives: 3,
+      interestedHivekeepers: ['Maya Chen', 'David Rivera', 'Luna Morales'],
       description: 'Join us for a sacred full moon ceremony where we\'ll gather in circle to honor the lunar cycle, set intentions, and connect with our community. Bring a blanket, journal, and an open heart.',
     },
     {
@@ -49,10 +76,12 @@ function Events() {
       time: '6:30 AM',
       location: 'Zoom',
       host: 'Maya Chen',
-      attendees: 45,
-      maxAttendees: 100,
       type: 'Meditation',
       isOnline: true,
+      category: 'cross-pollination',
+      crossPollinationSpots: 8,
+      interestedHives: 5,
+      interestedHivekeepers: ['Sarah Johnson', 'Alex Kim', 'Priya Sharma', 'Kai Nakamura', 'Jordan Ellis'],
       description: 'Start your day with guided meditation and breathwork. This online session is perfect for beginners and experienced practitioners alike. We\'ll explore various mindfulness techniques to cultivate inner peace.',
     },
     {
@@ -62,10 +91,12 @@ function Events() {
       time: '10:00 AM',
       location: 'Community Garden, Austin',
       host: 'David Rivera',
-      attendees: 18,
-      maxAttendees: 25,
       type: 'Workshop',
       isOnline: false,
+      category: 'open',
+      crossPollinationSpots: 0,
+      interestedHives: 0,
+      interestedHivekeepers: [],
       description: 'Learn the fundamentals of permaculture design in this hands-on workshop. We\'ll cover soil health, companion planting, water management, and creating sustainable food systems in urban environments.',
     },
     {
@@ -75,10 +106,12 @@ function Events() {
       time: '5:00 PM',
       location: 'Healing Center, Nashville',
       host: 'Jordan Ellis',
-      attendees: 30,
-      maxAttendees: 35,
       type: 'Healing',
       isOnline: false,
+      category: 'cross-pollination',
+      crossPollinationSpots: 4,
+      interestedHives: 2,
+      interestedHivekeepers: ['River Stone', 'Luna Morales'],
       description: 'Immerse yourself in healing vibrations during this transformative sound bath. Using crystal singing bowls, gongs, and other instruments, we\'ll create a sonic journey for deep relaxation and restoration.',
     },
     {
@@ -88,11 +121,13 @@ function Events() {
       time: '12:00 PM',
       location: 'Zoom',
       host: 'Alex Kim',
-      attendees: 15,
-      maxAttendees: 20,
       type: 'Discussion',
       isOnline: true,
-      description: 'A virtual gathering for leaders who want to integrate mindfulness and ethics into their work. We\'ll discuss challenges, share insights, and support each other in leading with consciousness.',
+      category: 'hivekeeper-only',
+      crossPollinationSpots: 0,
+      interestedHives: 0,
+      interestedHivekeepers: [],
+      description: 'A private gathering for Hivekeepers who want to discuss leadership challenges, share insights, and support each other in leading conscious communities. This is a safe space for leader-to-leader dialogue.',
     },
     {
       id: 6,
@@ -101,10 +136,12 @@ function Events() {
       time: '2:00 PM',
       location: 'Okafor Apothecary, Atlanta',
       host: 'Amara Okafor',
-      attendees: 12,
-      maxAttendees: 15,
       type: 'Workshop',
       isOnline: false,
+      category: 'cross-pollination',
+      crossPollinationSpots: 3,
+      interestedHives: 1,
+      interestedHivekeepers: ['Priya Sharma'],
       description: 'Learn to create your own herbal remedies in this hands-on workshop. We\'ll make tinctures, salves, and teas using traditional methods and locally sourced herbs.',
     },
   ]);
@@ -121,11 +158,13 @@ function Events() {
 
   // Filter events
   const filteredEvents = events.filter(event => {
-    const typeMatch = selectedType === 'all' || event.type === selectedType;
+    const categoryMatch = selectedCategory === 'all' ||
+      selectedCategory === event.category ||
+      (selectedCategory === 'my-events' && event.host === hivekeepers[0]?.name);
     const formatMatch = selectedFormat === 'all' ||
       (selectedFormat === 'online' && event.isOnline) ||
       (selectedFormat === 'offline' && !event.isOnline);
-    return typeMatch && formatMatch;
+    return categoryMatch && formatMatch;
   });
 
   // Handle creating a new event
@@ -138,7 +177,8 @@ function Events() {
       ...newEvent,
       id: newId,
       host: currentUser.name,
-      attendees: 1,
+      interestedHives: 0,
+      interestedHivekeepers: [],
     }]);
 
     setShowCreateModal(false);
@@ -148,28 +188,42 @@ function Events() {
       time: '',
       location: '',
       type: 'Workshop',
+      category: 'cross-pollination',
       isOnline: false,
       description: '',
-      maxAttendees: 20,
+      crossPollinationSpots: 5,
     });
   };
 
-  // Handle joining an event
-  const handleJoinEvent = (eventId) => {
-    if (!joinedEvents.includes(eventId)) {
-      setJoinedEvents([...joinedEvents, eventId]);
+  // Handle cross-pollination request
+  const handleCrossPollinateRequest = (eventId) => {
+    if (!interestedEvents.includes(eventId)) {
+      setInterestedEvents([...interestedEvents, eventId]);
       setEvents(events.map(e =>
-        e.id === eventId ? { ...e, attendees: e.attendees + 1 } : e
+        e.id === eventId ? {
+          ...e,
+          interestedHives: e.interestedHives + 1,
+          interestedHivekeepers: [...e.interestedHivekeepers, hivekeepers[0]?.name]
+        } : e
       ));
     }
-    setShowJoinModal(null);
+    setRequestSent(true);
+    setTimeout(() => {
+      setShowCrossPollinateModal(null);
+      setRequestSent(false);
+      setCrossPollinationMessage('');
+    }, 2000);
   };
 
-  // Handle leaving an event
-  const handleLeaveEvent = (eventId) => {
-    setJoinedEvents(joinedEvents.filter(id => id !== eventId));
+  // Handle withdrawing interest
+  const handleWithdrawInterest = (eventId) => {
+    setInterestedEvents(interestedEvents.filter(id => id !== eventId));
     setEvents(events.map(e =>
-      e.id === eventId ? { ...e, attendees: Math.max(0, e.attendees - 1) } : e
+      e.id === eventId ? {
+        ...e,
+        interestedHives: Math.max(0, e.interestedHives - 1),
+        interestedHivekeepers: e.interestedHivekeepers.filter(name => name !== hivekeepers[0]?.name)
+      } : e
     ));
   };
 
@@ -178,7 +232,7 @@ function Events() {
       <div className="flex items-center justify-between mb-6 sm:mb-8 gap-4">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Events</h2>
-          <p className="text-amber-700 mt-1 text-sm sm:text-base">Upcoming gatherings and experiences</p>
+          <p className="text-amber-700 mt-1 text-sm sm:text-base">Cross-pollinate with fellow Hivekeepers</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
@@ -192,33 +246,64 @@ function Events() {
         </button>
       </div>
 
-      {/* Filters */}
+      {/* Category Filters */}
       <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-4">
-        {/* Event Type Filter */}
         <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
           <button
-            onClick={() => setSelectedType('all')}
+            onClick={() => setSelectedCategory('all')}
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
-              selectedType === 'all'
+              selectedCategory === 'all'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
                 : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
             }`}
           >
-            All Types
+            All Events
           </button>
-          {eventTypes.map(type => (
-            <button
-              key={type}
-              onClick={() => setSelectedType(type)}
-              className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
-                selectedType === type
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                  : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
-              }`}
-            >
-              {type}
-            </button>
-          ))}
+          <button
+            onClick={() => setSelectedCategory('cross-pollination')}
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
+              selectedCategory === 'cross-pollination'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+            }`}
+          >
+            <span>🐝</span>
+            <span className="hidden sm:inline">Open for Cross-pollination</span>
+            <span className="sm:hidden">Cross-pollination</span>
+          </button>
+          <button
+            onClick={() => setSelectedCategory('hivekeeper-only')}
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
+              selectedCategory === 'hivekeeper-only'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+            }`}
+          >
+            <span>🔒</span>
+            <span className="hidden sm:inline">Hivekeeper Only</span>
+            <span className="sm:hidden">Hivekeeper</span>
+          </button>
+          <button
+            onClick={() => setSelectedCategory('open')}
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
+              selectedCategory === 'open'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+            }`}
+          >
+            <span>🌍</span>
+            <span>Open Events</span>
+          </button>
+          <button
+            onClick={() => setSelectedCategory('my-events')}
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+              selectedCategory === 'my-events'
+                ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+            }`}
+          >
+            My Events
+          </button>
         </div>
 
         {/* Online/Offline Filter */}
@@ -267,40 +352,46 @@ function Events() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {filteredEvents.map(event => {
           const host = getHostByName(event.host);
-          const isJoined = joinedEvents.includes(event.id);
+          const isInterested = interestedEvents.includes(event.id);
+          const category = categoryConfig[event.category];
+          const spotsAvailable = event.crossPollinationSpots - event.interestedHives;
 
           return (
             <div
               key={event.id}
               className="bg-white rounded-2xl shadow-sm border border-amber-100 p-4 sm:p-6 hover:shadow-md transition-shadow"
             >
-              <div className="flex items-start justify-between mb-3 sm:mb-4 gap-2">
+              {/* Category Badge */}
+              <div className="flex items-start justify-between mb-3 gap-2">
                 <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
-                  <span className={`px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium ${typeColors[event.type]}`}>
-                    {event.type}
+                  <span className={`px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium border ${category.color}`}>
+                    <span className="mr-1">{category.icon}</span>
+                    <span className="hidden sm:inline">{category.label}</span>
+                    <span className="sm:hidden">{category.shortLabel}</span>
                   </span>
-                  {event.isOnline ? (
-                    <span className="px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium bg-cyan-100 text-cyan-700 flex items-center gap-1">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                      <span className="hidden xs:inline">Online</span>
-                    </span>
-                  ) : (
-                    <span className="px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium bg-emerald-100 text-emerald-700 flex items-center gap-1">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      </svg>
-                      <span className="hidden xs:inline">In-Person</span>
-                    </span>
-                  )}
                 </div>
-                <div className="flex items-center gap-1 text-amber-600 flex-shrink-0">
-                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                  </svg>
-                  <span className="text-xs sm:text-sm font-medium">{event.attendees}/{event.maxAttendees}</span>
-                </div>
+              </div>
+
+              {/* Type and Format badges */}
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap mb-3">
+                <span className={`px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium ${typeColors[event.type]}`}>
+                  {event.type}
+                </span>
+                {event.isOnline ? (
+                  <span className="px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium bg-cyan-100 text-cyan-700 flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                    <span>Online</span>
+                  </span>
+                ) : (
+                  <span className="px-2.5 py-1 sm:px-3 rounded-full text-xs sm:text-sm font-medium bg-emerald-100 text-emerald-700 flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    </svg>
+                    <span>In-Person</span>
+                  </span>
+                )}
               </div>
 
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
@@ -337,24 +428,52 @@ function Events() {
                 </div>
               </div>
 
+              {/* Hive interest & spots */}
+              {event.category === 'cross-pollination' && (
+                <div className="flex items-center justify-between mb-4 p-3 bg-amber-50 rounded-xl">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🐝</span>
+                    <span className="text-sm font-medium text-amber-800">
+                      {event.interestedHives} hive{event.interestedHives !== 1 ? 's' : ''} interested
+                    </span>
+                  </div>
+                  <span className="text-sm font-medium text-amber-600">
+                    {event.interestedHives}/{event.crossPollinationSpots} hive spots
+                  </span>
+                </div>
+              )}
+
               <div className="flex gap-2 sm:gap-3">
-                {isJoined ? (
+                {event.category === 'cross-pollination' && (
+                  isInterested ? (
+                    <button
+                      onClick={() => handleWithdrawInterest(event.id)}
+                      className="flex-1 px-3 py-2 sm:px-4 bg-green-100 text-green-700 rounded-xl text-sm sm:text-base font-medium hover:bg-green-200 transition-all flex items-center justify-center gap-1.5 sm:gap-2"
+                    >
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="hidden sm:inline">Interested</span>
+                      <span className="sm:hidden">🐝</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setShowCrossPollinateModal(event)}
+                      disabled={spotsAvailable <= 0}
+                      className="flex-1 px-3 py-2 sm:px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl text-sm sm:text-base font-medium hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-1"
+                    >
+                      <span>🐝</span>
+                      <span className="hidden sm:inline">Cross-pollinate</span>
+                      <span className="sm:hidden">Pollinate</span>
+                    </button>
+                  )
+                )}
+                {event.category !== 'cross-pollination' && (
                   <button
-                    onClick={() => handleLeaveEvent(event.id)}
-                    className="flex-1 px-3 py-2 sm:px-4 bg-gray-100 text-gray-700 rounded-xl text-sm sm:text-base font-medium hover:bg-gray-200 transition-all flex items-center justify-center gap-1.5 sm:gap-2"
+                    onClick={() => setShowDetailsModal(event)}
+                    className="flex-1 px-3 py-2 sm:px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl text-sm sm:text-base font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
                   >
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Joined
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => setShowJoinModal(event)}
-                    disabled={event.attendees >= event.maxAttendees}
-                    className="flex-1 px-3 py-2 sm:px-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl text-sm sm:text-base font-medium hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {event.attendees >= event.maxAttendees ? 'Full' : 'Join'}
+                    View Event
                   </button>
                 )}
                 <button
@@ -429,18 +548,47 @@ function Events() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Event Type</label>
-                <select
-                  value={newEvent.type}
-                  onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })}
-                  className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
-                >
-                  {eventTypes.map(type => (
-                    <option key={type} value={type}>{type}</option>
-                  ))}
-                </select>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Event Type</label>
+                  <select
+                    value={newEvent.type}
+                    onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })}
+                    className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  >
+                    {eventTypes.map(type => (
+                      <option key={type} value={type}>{type}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                  <select
+                    value={newEvent.category}
+                    onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
+                    className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  >
+                    <option value="cross-pollination">🐝 Open for Cross-pollination</option>
+                    <option value="hivekeeper-only">🔒 Hivekeeper Only</option>
+                    <option value="open">🌍 Open Event</option>
+                  </select>
+                </div>
               </div>
+
+              {newEvent.category === 'cross-pollination' && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Cross-pollination Spots</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="20"
+                    value={newEvent.crossPollinationSpots}
+                    onChange={(e) => setNewEvent({ ...newEvent, crossPollinationSpots: parseInt(e.target.value) })}
+                    className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">How many partner hives can join?</p>
+                </div>
+              )}
 
               <div className="flex items-center gap-4">
                 <label className="flex items-center gap-2 cursor-pointer">
@@ -465,18 +613,6 @@ function Events() {
                   onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
                   className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
                   placeholder={newEvent.isOnline ? 'Zoom link or meeting URL' : 'Enter venue address'}
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Max Attendees</label>
-                <input
-                  type="number"
-                  min="1"
-                  max="1000"
-                  value={newEvent.maxAttendees}
-                  onChange={(e) => setNewEvent({ ...newEvent, maxAttendees: parseInt(e.target.value) })}
-                  className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
                 />
               </div>
 
@@ -519,21 +655,18 @@ function Events() {
             {(() => {
               const event = showDetailsModal;
               const host = getHostByName(event.host);
-              const isJoined = joinedEvents.includes(event.id);
+              const isInterested = interestedEvents.includes(event.id);
+              const category = categoryConfig[event.category];
+              const spotsAvailable = event.crossPollinationSpots - event.interestedHives;
 
               return (
                 <>
                   <div className="p-6 border-b border-amber-100">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${typeColors[event.type]}`}>
-                          {event.type}
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`px-3 py-1 rounded-full text-sm font-medium border ${category.color}`}>
+                          {category.icon} {category.label}
                         </span>
-                        {event.isOnline ? (
-                          <span className="px-3 py-1 rounded-full text-sm font-medium bg-cyan-100 text-cyan-700">Online</span>
-                        ) : (
-                          <span className="px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-700">In-Person</span>
-                        )}
                       </div>
                       <button
                         onClick={() => setShowDetailsModal(null)}
@@ -547,6 +680,17 @@ function Events() {
                   </div>
 
                   <div className="p-6">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${typeColors[event.type]}`}>
+                        {event.type}
+                      </span>
+                      {event.isOnline ? (
+                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-cyan-100 text-cyan-700">Online</span>
+                      ) : (
+                        <span className="px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-700">In-Person</span>
+                      )}
+                    </div>
+
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">{event.title}</h3>
 
                     {/* Host info with profile picture */}
@@ -588,26 +732,70 @@ function Events() {
                         </svg>
                         <span>{event.location}</span>
                       </div>
-                      <div className="flex items-center gap-3 text-gray-600">
-                        <svg className="w-5 h-5 text-amber-500" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
-                        </svg>
-                        <span>{event.attendees} of {event.maxAttendees} spots filled</span>
-                      </div>
                     </div>
 
-                    {/* Capacity bar */}
-                    <div className="mb-6">
-                      <div className="h-2 bg-amber-100 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all"
-                          style={{ width: `${(event.attendees / event.maxAttendees) * 100}%` }}
-                        />
+                    {/* Cross-pollination Opportunity Section */}
+                    {event.category === 'cross-pollination' && (
+                      <div className="mb-6 p-4 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+                        <h4 className="font-semibold text-amber-800 mb-3 flex items-center gap-2">
+                          <span>🐝</span> Cross-pollination Opportunity
+                        </h4>
+                        <p className="text-sm text-gray-700 mb-3">
+                          {host?.name.split(' ')[0]} is looking for <strong>{event.crossPollinationSpots}</strong> partner hives to share this event.
+                        </p>
+
+                        {/* Interested Hivekeepers */}
+                        {event.interestedHivekeepers.length > 0 && (
+                          <div className="mb-3">
+                            <p className="text-xs text-amber-700 font-medium mb-2">Interested Hivekeepers:</p>
+                            <div className="flex -space-x-2">
+                              {event.interestedHivekeepers.slice(0, 5).map((name, idx) => {
+                                const hk = hivekeepers.find(h => h.name === name);
+                                return hk ? (
+                                  <img
+                                    key={idx}
+                                    src={hk.photo}
+                                    alt={hk.name}
+                                    title={hk.name}
+                                    className="w-8 h-8 rounded-full border-2 border-white object-cover"
+                                  />
+                                ) : null;
+                              })}
+                              {event.interestedHivekeepers.length > 5 && (
+                                <div className="w-8 h-8 rounded-full bg-amber-200 border-2 border-white flex items-center justify-center text-xs font-medium text-amber-800">
+                                  +{event.interestedHivekeepers.length - 5}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+
+                        {/* Spots Progress */}
+                        <div className="mb-3">
+                          <div className="h-2 bg-amber-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-amber-500 to-orange-500 transition-all"
+                              style={{ width: `${(event.interestedHives / event.crossPollinationSpots) * 100}%` }}
+                            />
+                          </div>
+                          <p className="text-xs text-amber-700 mt-1">
+                            {spotsAvailable} of {event.crossPollinationSpots} spots remaining
+                          </p>
+                        </div>
+
+                        {/* What you get/give */}
+                        <div className="grid grid-cols-2 gap-3 text-xs">
+                          <div className="p-2 bg-white rounded-lg">
+                            <p className="font-medium text-green-700 mb-1">What you get:</p>
+                            <p className="text-gray-600">Your hive gets access to this event</p>
+                          </div>
+                          <div className="p-2 bg-white rounded-lg">
+                            <p className="font-medium text-amber-700 mb-1">What you give:</p>
+                            <p className="text-gray-600">Promote to your community</p>
+                          </div>
+                        </div>
                       </div>
-                      <p className="text-sm text-gray-500 mt-1">
-                        {event.maxAttendees - event.attendees} spots remaining
-                      </p>
-                    </div>
+                    )}
 
                     <div className="mb-6">
                       <h4 className="font-semibold text-gray-900 mb-2">About this event</h4>
@@ -615,29 +803,44 @@ function Events() {
                     </div>
 
                     <div className="flex gap-3">
-                      {isJoined ? (
+                      {event.category === 'cross-pollination' && (
+                        isInterested ? (
+                          <button
+                            onClick={() => {
+                              handleWithdrawInterest(event.id);
+                              setShowDetailsModal({
+                                ...event,
+                                interestedHives: event.interestedHives - 1,
+                                interestedHivekeepers: event.interestedHivekeepers.filter(n => n !== hivekeepers[0]?.name)
+                              });
+                            }}
+                            className="flex-1 px-4 py-3 bg-green-100 text-green-700 rounded-xl font-medium hover:bg-green-200 transition-all flex items-center justify-center gap-2"
+                          >
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            Withdraw Interest
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              setShowDetailsModal(null);
+                              setShowCrossPollinateModal(event);
+                            }}
+                            disabled={spotsAvailable <= 0}
+                            className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                          >
+                            <span>🐝</span>
+                            {spotsAvailable <= 0 ? 'Spots Filled' : 'Request Cross-pollination'}
+                          </button>
+                        )
+                      )}
+                      {event.category !== 'cross-pollination' && (
                         <button
-                          onClick={() => {
-                            handleLeaveEvent(event.id);
-                            setShowDetailsModal({ ...event, attendees: event.attendees - 1 });
-                          }}
-                          className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all flex items-center justify-center gap-2"
+                          onClick={() => setShowDetailsModal(null)}
+                          className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
                         >
-                          <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                          You're Going - Click to Cancel
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => {
-                            handleJoinEvent(event.id);
-                            setShowDetailsModal({ ...event, attendees: event.attendees + 1 });
-                          }}
-                          disabled={event.attendees >= event.maxAttendees}
-                          className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-                        >
-                          {event.attendees >= event.maxAttendees ? 'Event is Full' : 'Join This Event'}
+                          Close
                         </button>
                       )}
                     </div>
@@ -649,37 +852,67 @@ function Events() {
         </div>
       )}
 
-      {/* Join Confirmation Modal */}
-      {showJoinModal && (
+      {/* Cross-pollination Request Modal */}
+      {showCrossPollinateModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-md w-full">
-            <div className="p-6">
-              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-              </div>
+            {!requestSent ? (
+              <div className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl">🐝</span>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900">Request Cross-pollination</h3>
+                    <p className="text-sm text-gray-500">{showCrossPollinateModal.title}</p>
+                  </div>
+                </div>
 
-              <h3 className="text-xl font-bold text-gray-900 text-center mb-2">Join Event?</h3>
-              <p className="text-gray-600 text-center mb-6">
-                You're about to join <span className="font-semibold">{showJoinModal.title}</span> on {showJoinModal.date} at {showJoinModal.time}.
-              </p>
+                <div className="bg-amber-50 p-4 rounded-xl mb-4 border border-amber-200">
+                  <p className="text-sm text-amber-800">
+                    <strong>Cross-pollination</strong> means partnering with {getHostByName(showCrossPollinateModal.host)?.name.split(' ')[0]} to share this event with your hive. Your community gets access, and you help spread the word!
+                  </p>
+                </div>
 
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setShowJoinModal(null)}
-                  className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => handleJoinEvent(showJoinModal.id)}
-                  className="flex-1 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
-                >
-                  Confirm
-                </button>
+                <p className="text-gray-600 mb-4 text-sm">
+                  Tell {getHostByName(showCrossPollinateModal.host)?.name.split(' ')[0]} about your hive and why you'd like to cross-pollinate:
+                </p>
+
+                <textarea
+                  value={crossPollinationMessage}
+                  onChange={(e) => setCrossPollinationMessage(e.target.value)}
+                  placeholder={`Hi! I run [Your Hive Name] and I think my community would love this event because...`}
+                  className="w-full h-28 p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none text-sm"
+                />
+
+                <div className="flex gap-3 mt-4">
+                  <button
+                    onClick={() => {
+                      setShowCrossPollinateModal(null);
+                      setCrossPollinationMessage('');
+                    }}
+                    className="flex-1 px-4 py-2 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handleCrossPollinateRequest(showCrossPollinateModal.id)}
+                    className="flex-1 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
+                  >
+                    <span>🐝</span>
+                    Send Request
+                  </button>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="p-6 text-center py-10">
+                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span className="text-3xl">🐝</span>
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Request Sent!</h3>
+                <p className="text-gray-600">
+                  {getHostByName(showCrossPollinateModal.host)?.name.split(' ')[0]} will review your cross-pollination request.
+                </p>
+              </div>
+            )}
           </div>
         </div>
       )}
