@@ -171,7 +171,7 @@ function Collaborate() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -182,8 +182,8 @@ function Collaborate() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 sm:mb-8 gap-4">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Collaboration Board</h2>
-          <p className="text-amber-700 mt-1 text-sm sm:text-base">Find your next cross-pollination partner</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100">Collaboration Board</h2>
+          <p className="text-amber-700 dark:text-amber-400 mt-1 text-sm sm:text-base">Find your next cross-pollination partner</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
@@ -203,7 +203,7 @@ function Collaborate() {
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
             selectedFilter === 'all'
               ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-              : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+              : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
           }`}
         >
           All
@@ -213,7 +213,7 @@ function Collaborate() {
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
             selectedFilter === 'looking'
               ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-              : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+              : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
           }`}
         >
           <span>🔍</span>
@@ -224,7 +224,7 @@ function Collaborate() {
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1.5 ${
             selectedFilter === 'offering'
               ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-              : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+              : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
           }`}
         >
           <span>🎁</span>
@@ -241,7 +241,7 @@ function Collaborate() {
           return (
             <div
               key={post.id}
-              className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6 hover:shadow-md transition-shadow"
+              className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6 hover:shadow-md transition-shadow"
             >
               {/* Type Badge */}
               <div className="mb-4">
@@ -259,17 +259,17 @@ function Collaborate() {
               </div>
 
               {/* Title */}
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{post.title}</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-stone-100 mb-2">{post.title}</h3>
 
               {/* Description */}
-              <p className="text-gray-600 text-sm mb-4 line-clamp-3">{post.description}</p>
+              <p className="text-gray-600 dark:text-stone-400 text-sm mb-4 line-clamp-3">{post.description}</p>
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-4">
                 {post.tags.map((tag, idx) => (
                   <span
                     key={idx}
-                    className="px-2.5 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-medium"
+                    className="px-2.5 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded-full text-xs font-medium"
                   >
                     {tag}
                   </span>
@@ -277,7 +277,7 @@ function Collaborate() {
               </div>
 
               {/* Author + Meta */}
-              <div className="flex items-center justify-between pt-4 border-t border-amber-100">
+              <div className="flex items-center justify-between pt-4 border-t border-amber-100 dark:border-stone-700">
                 <div
                   className="flex items-center gap-3 cursor-pointer"
                   onClick={() => author && navigate(`/profile/${author.id}`)}
@@ -290,16 +290,16 @@ function Collaborate() {
                     />
                   )}
                   <div>
-                    <p className="font-medium text-gray-900 text-sm hover:text-amber-700 transition-colors">
+                    <p className="font-medium text-gray-900 dark:text-stone-100 text-sm hover:text-amber-700 dark:hover:text-amber-400 transition-colors">
                       {post.author}
                     </p>
                     {primaryHive && (
-                      <p className="text-xs text-gray-500">{primaryHive.name}</p>
+                      <p className="text-xs text-gray-500 dark:text-stone-400">{primaryHive.name}</p>
                     )}
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs text-gray-400 mb-2">{getRelativeTime(post.daysAgo)}</p>
+                  <p className="text-xs text-gray-400 dark:text-stone-500 mb-2">{getRelativeTime(post.daysAgo)}</p>
                   <button
                     onClick={() => setShowRespondModal(post)}
                     className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
@@ -314,18 +314,18 @@ function Collaborate() {
       </div>
 
       {filteredPosts.length === 0 && (
-        <div className="text-center py-12 bg-white rounded-2xl border border-amber-100">
-          <p className="text-gray-500">No posts found matching your filter.</p>
+        <div className="text-center py-12 bg-white dark:bg-stone-800 rounded-2xl border border-amber-100 dark:border-stone-700">
+          <p className="text-gray-500 dark:text-stone-400">No posts found matching your filter.</p>
         </div>
       )}
 
       {/* Create Post Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-amber-100">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-amber-100 dark:border-stone-700">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">Create Post</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-stone-100">Create Post</h3>
                 <button
                   onClick={() => setShowCreateModal(false)}
                   className="p-2 hover:bg-amber-50 rounded-lg transition-colors"
@@ -340,7 +340,7 @@ function Collaborate() {
             <form onSubmit={handleCreatePost} className="p-6 space-y-5">
               {/* Type Toggle */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">What are you posting?</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-2">What are you posting?</label>
                 <div className="flex gap-3">
                   <button
                     type="button"
@@ -371,33 +371,33 @@ function Collaborate() {
 
               {/* Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Title</label>
                 <input
                   type="text"
                   required
                   value={newPost.title}
                   onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                   placeholder={newPost.type === 'looking' ? "What are you looking for?" : "What are you offering?"}
                 />
               </div>
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Description</label>
                 <textarea
                   required
                   rows={4}
                   value={newPost.description}
                   onChange={(e) => setNewPost({ ...newPost, description: e.target.value })}
-                  className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                  className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100 resize-none"
                   placeholder="Describe what you're looking for or offering in detail..."
                 />
               </div>
 
               {/* Tags */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-2">
                   Tags <span className="text-gray-400 font-normal">(select up to 5)</span>
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -420,11 +420,11 @@ function Collaborate() {
 
               {/* Expiration */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">This post expires in</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">This post expires in</label>
                 <select
                   value={newPost.expiration}
                   onChange={(e) => setNewPost({ ...newPost, expiration: parseInt(e.target.value) })}
-                  className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                 >
                   <option value={7}>7 days</option>
                   <option value={14}>14 days</option>
@@ -456,7 +456,7 @@ function Collaborate() {
       {/* Respond Modal */}
       {showRespondModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl max-w-lg w-full">
             {!responseSent ? (
               <div className="p-6">
                 {/* Post Preview */}
@@ -492,7 +492,7 @@ function Collaborate() {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-2">
                     Write a message to {showRespondModal.author.split(' ')[0]}
                   </label>
                   <textarea

@@ -14,7 +14,7 @@ function Visions() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -24,10 +24,10 @@ function Visions() {
 
       {/* Header */}
       <div className="text-center mb-10 sm:mb-14">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-stone-100 mb-4">
           Visions of the Hive
         </h1>
-        <p className="text-lg sm:text-xl text-amber-700 max-w-2xl mx-auto">
+        <p className="text-lg sm:text-xl text-amber-700 dark:text-amber-400 max-w-2xl mx-auto">
           Explore the dreams driving our community of leaders
         </p>
       </div>
@@ -41,7 +41,7 @@ function Visions() {
           return (
             <div
               key={keeper.id}
-              className={`relative bg-white rounded-3xl shadow-sm border border-amber-100 overflow-hidden hover:shadow-lg transition-shadow ${
+              className={`relative bg-white dark:bg-stone-800 rounded-3xl shadow-sm border border-amber-100 dark:border-stone-700 overflow-hidden hover:shadow-lg transition-shadow ${
                 isEven ? '' : 'md:flex-row-reverse'
               }`}
             >
@@ -57,19 +57,19 @@ function Visions() {
                     className="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover border-4 border-amber-200 shadow-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
                     onClick={() => navigate(`/profile/${keeper.id}`)}
                   />
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-1">{keeper.name}</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-stone-100 mb-1">{keeper.name}</h3>
 
                   {/* Hive info */}
                   {primaryHive && (
-                    <p className="text-sm text-amber-600 mb-2">
+                    <p className="text-sm text-amber-600 dark:text-amber-400 mb-2">
                       {primaryHive.name}
                       <span className="mx-1.5">·</span>
-                      <span className="text-amber-500">{primaryHive.sizeCategory}</span>
+                      <span className="text-amber-500 dark:text-amber-500">{primaryHive.sizeCategory}</span>
                     </p>
                   )}
 
                   {/* Location */}
-                  <div className="flex items-center gap-1.5 text-gray-500 text-sm mb-4">
+                  <div className="flex items-center gap-1.5 text-gray-500 dark:text-stone-400 text-sm mb-4">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -82,7 +82,7 @@ function Visions() {
                     {getFocusAreas(keeper).map((area, idx) => (
                       <span
                         key={idx}
-                        className="px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-medium"
+                        className="px-3 py-1 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded-full text-xs font-medium"
                       >
                         {area}
                       </span>
@@ -94,17 +94,17 @@ function Visions() {
                 <div className="flex-1 flex flex-col justify-center">
                   <div className={`relative ${isEven ? 'md:pl-6' : 'md:pr-6'}`}>
                     {/* Quote mark */}
-                    <span className={`absolute -top-4 ${isEven ? '-left-2 md:left-0' : '-right-2 md:right-0'} text-6xl sm:text-7xl text-amber-200 font-serif leading-none select-none`}>
+                    <span className={`absolute -top-4 ${isEven ? '-left-2 md:left-0' : '-right-2 md:right-0'} text-6xl sm:text-7xl text-amber-200 dark:text-amber-700 font-serif leading-none select-none`}>
                       "
                     </span>
 
                     {/* Vision text */}
-                    <blockquote className={`relative text-xl sm:text-2xl lg:text-3xl text-gray-800 italic leading-relaxed ${isEven ? 'text-left' : 'md:text-right'} pt-4`}>
+                    <blockquote className={`relative text-xl sm:text-2xl lg:text-3xl text-gray-800 dark:text-stone-200 italic leading-relaxed ${isEven ? 'text-left' : 'md:text-right'} pt-4`}>
                       {keeper.vision}
                     </blockquote>
 
                     {/* Closing quote */}
-                    <span className={`absolute -bottom-8 ${isEven ? 'right-0' : 'left-0'} text-6xl sm:text-7xl text-amber-200 font-serif leading-none select-none transform rotate-180`}>
+                    <span className={`absolute -bottom-8 ${isEven ? 'right-0' : 'left-0'} text-6xl sm:text-7xl text-amber-200 dark:text-amber-700 font-serif leading-none select-none transform rotate-180`}>
                       "
                     </span>
                   </div>
@@ -113,7 +113,7 @@ function Visions() {
                   <div className={`mt-8 ${isEven ? 'text-left' : 'md:text-right'}`}>
                     <button
                       onClick={() => navigate(`/profile/${keeper.id}`)}
-                      className="inline-flex items-center gap-2 text-amber-600 hover:text-amber-800 font-medium transition-colors group"
+                      className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 font-medium transition-colors group"
                     >
                       Read full profile
                       <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -133,9 +133,9 @@ function Visions() {
 
       {/* Bottom CTA */}
       <div className="mt-16 text-center">
-        <div className="inline-block p-8 bg-gradient-to-br from-amber-50 to-orange-50 rounded-3xl border border-amber-200">
-          <h3 className="text-2xl font-bold text-gray-900 mb-3">Share Your Vision</h3>
-          <p className="text-gray-600 mb-6 max-w-md">
+        <div className="inline-block p-8 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-3xl border border-amber-200 dark:border-amber-700">
+          <h3 className="text-2xl font-bold text-gray-900 dark:text-stone-100 mb-3">Share Your Vision</h3>
+          <p className="text-gray-600 dark:text-stone-400 mb-6 max-w-md">
             Every great hive starts with a dream. What world are you building?
           </p>
           <button

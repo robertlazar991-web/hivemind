@@ -77,12 +77,12 @@ function Dashboard() {
           <div className="min-w-0">
             <h2
               onClick={() => navigate('/my-profile')}
-              className="text-xl sm:text-3xl font-bold text-gray-900 cursor-pointer hover:text-amber-700 transition-colors"
+              className="text-xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100 cursor-pointer hover:text-amber-700 dark:hover:text-amber-400 transition-colors"
             >
               Welcome back, {currentUser.name}
             </h2>
             <div className="flex items-center gap-1.5 sm:gap-2 mt-1 flex-wrap text-sm sm:text-base">
-              <span className="text-amber-700 font-medium">My Hive: {currentUser.hiveName}</span>
+              <span className="text-amber-700 dark:text-amber-400 font-medium">My Hive: {currentUser.hiveName}</span>
               <span className="text-gray-400 hidden sm:inline">•</span>
               <span className="font-medium text-blue-600">
                 {currentUser.hiveSize}
@@ -108,46 +108,46 @@ function Dashboard() {
       {/* Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <div
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
+          className="bg-white dark:bg-stone-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 dark:border-stone-700 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
           onClick={() => navigate('/connections#connected')}
         >
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-600 font-medium text-sm sm:text-base">Connected Hivekeepers</h3>
+            <h3 className="text-amber-600 dark:text-amber-400 font-medium text-sm sm:text-base">Connected Hivekeepers</h3>
             <span className="text-xl sm:text-2xl">🤝</span>
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{stats.connectedHivekeepers}</p>
-          <p className="text-xs sm:text-sm text-gray-500 mt-1">Leader-to-leader connections</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100 mt-1 sm:mt-2">{stats.connectedHivekeepers}</p>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-stone-400 mt-1">Leader-to-leader connections</p>
         </div>
 
         <div
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
+          className="bg-white dark:bg-stone-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 dark:border-stone-700 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
           onClick={() => navigate('/connections#pending-requests')}
         >
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-600 font-medium text-sm sm:text-base">Pending Requests</h3>
+            <h3 className="text-amber-600 dark:text-amber-400 font-medium text-sm sm:text-base">Pending Requests</h3>
             <span className="text-xl sm:text-2xl">📬</span>
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{stats.pendingRequests}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100 mt-1 sm:mt-2">{stats.pendingRequests}</p>
           <p className="text-xs sm:text-sm text-amber-600 mt-1">Awaiting your response</p>
         </div>
 
         <div
-          className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
+          className="bg-white dark:bg-stone-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 dark:border-stone-700 cursor-pointer hover:shadow-md hover:border-amber-200 transition-all"
           onClick={() => navigate('/connections#collaborations')}
         >
           <div className="flex items-center justify-between">
-            <h3 className="text-amber-600 font-medium text-sm sm:text-base">Cross-pollinations</h3>
+            <h3 className="text-amber-600 dark:text-amber-400 font-medium text-sm sm:text-base">Cross-pollinations</h3>
             <span className="text-xl sm:text-2xl">🐝</span>
           </div>
-          <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">{stats.crossPollinations}</p>
+          <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100 mt-1 sm:mt-2">{stats.crossPollinations}</p>
           <p className="text-xs sm:text-sm text-green-600 mt-1">Active partnerships</p>
         </div>
       </div>
 
       {/* Cross-pollination Activity Section */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 mb-6 sm:mb-8">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 dark:border-stone-700 mb-6 sm:mb-8">
         <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 flex items-center gap-2">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-stone-100 flex items-center gap-2">
             <span>🐝</span>
             Your Cross-pollination Activity
           </h3>
@@ -155,14 +155,14 @@ function Dashboard() {
         <div className="space-y-2 sm:space-y-3 mb-4">
           <div className="flex items-center gap-3">
             <span className="text-lg">🐝</span>
-            <p className="text-gray-700 text-sm sm:text-base">
-              You've pollinated <span className="font-bold text-amber-700">{pollinationStats.eventsShared}</span> events
+            <p className="text-gray-700 dark:text-stone-300 text-sm sm:text-base">
+              You've pollinated <span className="font-bold text-amber-700 dark:text-amber-400">{pollinationStats.eventsShared}</span> events
             </p>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-lg">🌸</span>
-            <p className="text-gray-700 text-sm sm:text-base">
-              <span className="font-bold text-amber-700">{pollinationStats.eventsReceivedFromOthers}</span> of your events were pollinated
+            <p className="text-gray-700 dark:text-stone-300 text-sm sm:text-base">
+              <span className="font-bold text-amber-700 dark:text-amber-400">{pollinationStats.eventsReceivedFromOthers}</span> of your events were pollinated
             </p>
           </div>
         </div>
@@ -178,9 +178,9 @@ function Dashboard() {
       </div>
 
       {/* My Hive Partners Section */}
-      <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 mb-6 sm:mb-8">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 dark:border-stone-700 mb-6 sm:mb-8">
         <div className="flex items-center justify-between mb-3 sm:mb-4">
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900">My Hive Partners</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-stone-100">My Hive Partners</h3>
           <button
             onClick={() => navigate('/connections')}
             className="text-amber-600 hover:text-amber-700 font-medium flex items-center gap-1 transition-colors text-sm sm:text-base"
@@ -215,7 +215,7 @@ function Dashboard() {
               </div>
             )}
           </div>
-          <p className="text-gray-600 text-xs sm:text-sm">
+          <p className="text-gray-600 dark:text-stone-400 text-xs sm:text-sm">
             Leaders you've connected with for collaboration and cross-pollination
           </p>
         </div>
@@ -224,13 +224,13 @@ function Dashboard() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
         {/* Recent Activity */}
-        <div className="lg:col-span-2 bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Recent Activity</h3>
+        <div className="lg:col-span-2 bg-white dark:bg-stone-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 dark:border-stone-700">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-stone-100 mb-3 sm:mb-4">Recent Activity</h3>
           <div className="space-y-2 sm:space-y-3">
             {recentActivity.map((activity, i) => (
               <div
                 key={i}
-                className="flex items-start sm:items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl hover:bg-amber-50 transition-colors cursor-pointer"
+                className="flex items-start sm:items-center gap-3 sm:gap-4 p-2.5 sm:p-3 rounded-xl hover:bg-amber-50 dark:hover:bg-stone-700 transition-colors cursor-pointer"
                 onClick={() => activity.user && navigate(`/profile/${activity.user.id}`)}
               >
                 <div className="relative flex-shrink-0">
@@ -248,13 +248,13 @@ function Dashboard() {
                   <span className="absolute -bottom-1 -right-1 text-xs sm:text-sm">{activity.icon}</span>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-gray-900 text-sm sm:text-base">
+                  <p className="text-gray-900 dark:text-stone-100 text-sm sm:text-base">
                     {activity.user && (
                       <span className="font-medium">{activity.user.name} </span>
                     )}
                     {activity.action}
                   </p>
-                  <p className="text-xs sm:text-sm text-amber-600">{activity.time}</p>
+                  <p className="text-xs sm:text-sm text-amber-600 dark:text-amber-400">{activity.time}</p>
                 </div>
                 {activity.type === 'connection_request' && (
                   <div className="flex gap-1.5 sm:gap-2 flex-shrink-0">
@@ -277,8 +277,8 @@ function Dashboard() {
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100">
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Quick Actions</h3>
+        <div className="bg-white dark:bg-stone-800 rounded-2xl p-4 sm:p-6 shadow-sm border border-amber-100 dark:border-stone-700">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-stone-100 mb-3 sm:mb-4">Quick Actions</h3>
           <div className="space-y-2 sm:space-y-3">
             <button
               onClick={() => navigate('/community')}

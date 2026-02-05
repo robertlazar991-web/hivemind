@@ -54,7 +54,7 @@ function MyProfile() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -78,7 +78,7 @@ function MyProfile() {
       </div>
 
       {/* Profile Card */}
-      <div className="bg-white rounded-2xl shadow-sm border border-amber-100 overflow-hidden">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 overflow-hidden">
         {/* Header with gradient */}
         <div className="h-32 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 relative">
           <div className="absolute inset-0 opacity-20">
@@ -111,41 +111,41 @@ function MyProfile() {
 
           {/* Name and location */}
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">{myProfile.name}</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-stone-100">{myProfile.name}</h1>
             {myProfile.tagline && (
-              <p className="text-amber-700 font-medium mt-1">{myProfile.tagline}</p>
+              <p className="text-amber-700 dark:text-amber-400 font-medium mt-1">{myProfile.tagline}</p>
             )}
-            <div className="flex items-center gap-2 text-gray-600 mt-2">
+            <div className="flex items-center gap-2 text-gray-600 dark:text-stone-400 mt-2">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span>{myProfile.location}</span>
             </div>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-stone-500 mt-1">
               Member since {new Date(myProfile.joinedDate).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </p>
           </div>
 
           {/* Bio */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">About</h2>
-            <p className="text-gray-700 leading-relaxed">{myProfile.bio}</p>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-2">About</h2>
+            <p className="text-gray-700 dark:text-stone-300 leading-relaxed">{myProfile.bio}</p>
           </div>
 
           {/* Vision & Mission */}
           {(myProfile.vision || myProfile.mission) && (
-            <div className="mb-6 p-5 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+            <div className="mb-6 p-5 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl border border-amber-200 dark:border-amber-700">
               {myProfile.vision && (
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-amber-700 uppercase tracking-wide mb-2">Vision</h3>
-                  <p className="text-lg text-gray-800 italic leading-relaxed">"{myProfile.vision}"</p>
+                  <h3 className="text-sm font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide mb-2">Vision</h3>
+                  <p className="text-lg text-gray-800 dark:text-stone-200 italic leading-relaxed">"{myProfile.vision}"</p>
                 </div>
               )}
               {myProfile.mission && (
                 <div>
-                  <h3 className="text-sm font-semibold text-amber-700 uppercase tracking-wide mb-2">Mission</h3>
-                  <p className="text-gray-700 leading-relaxed">{myProfile.mission}</p>
+                  <h3 className="text-sm font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide mb-2">Mission</h3>
+                  <p className="text-gray-700 dark:text-stone-300 leading-relaxed">{myProfile.mission}</p>
                 </div>
               )}
             </div>
@@ -154,7 +154,7 @@ function MyProfile() {
           {/* My Hive(s) */}
           {myProfile.hives && myProfile.hives.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">My Hive(s)</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">My Hive(s)</h2>
               <div className="space-y-3">
                 {myProfile.hives.map((hive, index) => {
                   const platform = platformConfig[hive.platform] || platformConfig.Website;
@@ -162,17 +162,17 @@ function MyProfile() {
                   return (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 bg-white rounded-xl border border-amber-200 hover:border-amber-300 transition-colors"
+                      className="flex items-center justify-between p-4 bg-white dark:bg-stone-700 rounded-xl border border-amber-200 dark:border-stone-600 hover:border-amber-300 dark:hover:border-stone-500 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{platform.icon}</span>
                         <div>
-                          <h3 className="font-semibold text-gray-900">{hive.name}</h3>
+                          <h3 className="font-semibold text-gray-900 dark:text-stone-100">{hive.name}</h3>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`text-xs px-2 py-0.5 rounded-full ${sizeColor}`}>
                               {hive.sizeCategory}
                             </span>
-                            <span className="text-xs text-gray-500">on {hive.platform}</span>
+                            <span className="text-xs text-gray-500 dark:text-stone-400">on {hive.platform}</span>
                           </div>
                         </div>
                       </div>
@@ -194,12 +194,12 @@ function MyProfile() {
 
           {/* Skills */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Skills</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">Skills</h2>
             <div className="flex flex-wrap gap-2">
               {myProfile.skills.map(skill => (
                 <span
                   key={skill}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                  className="px-3 py-1 bg-gray-100 dark:bg-stone-700 text-gray-700 dark:text-stone-300 rounded-full text-sm"
                 >
                   {skill}
                 </span>
@@ -209,17 +209,17 @@ function MyProfile() {
 
           {/* Open to Collaborate */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Open to Collaborate</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">Open to Collaborate</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {myProfile.openTo.map(item => (
                 <div
                   key={item}
-                  className="flex items-center gap-2 p-3 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-amber-200"
+                  className="flex items-center gap-2 p-3 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-700"
                 >
                   <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm font-medium text-amber-800">{item}</span>
+                  <span className="text-sm font-medium text-amber-800 dark:text-amber-300">{item}</span>
                 </div>
               ))}
             </div>
@@ -228,15 +228,15 @@ function MyProfile() {
           {/* Past Collaborations */}
           {myProfile.pastCollaborations && myProfile.pastCollaborations.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">Past Collaborations</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">Past Collaborations</h2>
               <div className="space-y-2">
                 {myProfile.pastCollaborations.map((collab, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 p-3 bg-green-50 rounded-xl border border-green-200"
+                    className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-700"
                   >
                     <span className="text-lg">🤝</span>
-                    <span className="text-sm text-green-800">{collab}</span>
+                    <span className="text-sm text-green-800 dark:text-green-300">{collab}</span>
                   </div>
                 ))}
               </div>
@@ -244,7 +244,7 @@ function MyProfile() {
           )}
 
           {/* Edit Profile Button at bottom */}
-          <div className="pt-4 border-t border-amber-100">
+          <div className="pt-4 border-t border-amber-100 dark:border-stone-700">
             <button
               onClick={() => navigate('/profile/edit')}
               className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-semibold hover:from-amber-600 hover:to-orange-600 transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"

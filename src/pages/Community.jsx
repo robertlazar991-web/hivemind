@@ -22,7 +22,7 @@ function Community() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -31,8 +31,8 @@ function Community() {
       </button>
 
       <div className="mb-6 sm:mb-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Hive Map</h2>
-        <p className="text-amber-700 mt-1 text-sm sm:text-base">Explore our community of Hivekeepers</p>
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100">Hive Map</h2>
+        <p className="text-amber-700 dark:text-amber-400 mt-1 text-sm sm:text-base">Explore our community of Hivekeepers</p>
       </div>
 
       {/* Filter by Circle */}
@@ -42,7 +42,7 @@ function Community() {
           className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
             selectedFilter === 'all'
               ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-              : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+              : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
           }`}
         >
           All Hivekeepers
@@ -54,7 +54,7 @@ function Community() {
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
               selectedFilter === circle
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             {circle}
@@ -63,7 +63,7 @@ function Community() {
       </div>
 
       {/* World Map */}
-      <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-6 mb-8">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-6 mb-8">
         <HiveMap
           hivekeepers={filteredKeepers}
           onMarkerClick={handleMarkerClick}
@@ -71,14 +71,14 @@ function Community() {
       </div>
 
       {/* List view */}
-      <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">All Hivekeepers</h3>
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-6">
+        <h3 className="text-xl font-bold text-gray-900 dark:text-stone-100 mb-4">All Hivekeepers</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredKeepers.map(keeper => (
             <div
               key={keeper.id}
               onClick={() => navigate(`/profile/${keeper.id}`)}
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-amber-50 cursor-pointer transition-colors border border-amber-100"
+              className="flex items-center gap-4 p-4 rounded-xl hover:bg-amber-50 dark:hover:bg-stone-700 cursor-pointer transition-colors border border-amber-100 dark:border-stone-700"
             >
               <img
                 src={keeper.photo}
@@ -86,8 +86,8 @@ function Community() {
                 className="w-14 h-14 rounded-full object-cover border-2 border-amber-300"
               />
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-gray-900 truncate">{keeper.name}</p>
-                <p className="text-sm text-amber-600 truncate">{keeper.location}</p>
+                <p className="font-semibold text-gray-900 dark:text-stone-100 truncate">{keeper.name}</p>
+                <p className="text-sm text-amber-600 dark:text-amber-400 truncate">{keeper.location}</p>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {keeper.openTo.slice(0, 2).map(item => (
                     <span key={item} className="text-xs bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full">

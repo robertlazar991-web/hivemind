@@ -48,7 +48,7 @@ function Profile() {
     return (
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="text-center py-16">
-          <h2 className="text-2xl font-bold text-gray-900">Hivekeeper not found</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-stone-100">Hivekeeper not found</h2>
           <button
             onClick={() => navigate('/community')}
             className="mt-4 px-6 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
@@ -97,7 +97,7 @@ function Profile() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -106,7 +106,7 @@ function Profile() {
       </button>
 
       {/* Profile Card */}
-      <div className="bg-white rounded-2xl shadow-sm border border-amber-100 overflow-hidden">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 overflow-hidden">
         {/* Header with gradient */}
         <div className="h-32 bg-gradient-to-r from-amber-400 via-orange-400 to-amber-500 relative">
           <div className="absolute inset-0 opacity-20">
@@ -139,38 +139,38 @@ function Profile() {
 
           {/* Name and location */}
           <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900">{keeper.name}</h1>
-            <div className="flex items-center gap-2 text-amber-600 mt-1">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-stone-100">{keeper.name}</h1>
+            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 mt-1">
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span>{keeper.location}</span>
             </div>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 dark:text-stone-500 mt-1">
               Member since {new Date(keeper.joinedDate).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </p>
           </div>
 
           {/* Bio */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">About</h2>
-            <p className="text-gray-700 leading-relaxed">{keeper.bio}</p>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-2">About</h2>
+            <p className="text-gray-700 dark:text-stone-300 leading-relaxed">{keeper.bio}</p>
           </div>
 
           {/* Vision & Mission */}
           {(keeper.vision || keeper.mission) && (
-            <div className="mb-6 p-5 bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl border border-amber-200">
+            <div className="mb-6 p-5 bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl border border-amber-200 dark:border-amber-700">
               {keeper.vision && (
                 <div className="mb-4">
-                  <h3 className="text-sm font-semibold text-amber-700 uppercase tracking-wide mb-2">Vision</h3>
-                  <p className="text-lg text-gray-800 italic leading-relaxed">"{keeper.vision}"</p>
+                  <h3 className="text-sm font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide mb-2">Vision</h3>
+                  <p className="text-lg text-gray-800 dark:text-stone-200 italic leading-relaxed">"{keeper.vision}"</p>
                 </div>
               )}
               {keeper.mission && (
                 <div>
-                  <h3 className="text-sm font-semibold text-amber-700 uppercase tracking-wide mb-2">Mission</h3>
-                  <p className="text-gray-700 leading-relaxed">{keeper.mission}</p>
+                  <h3 className="text-sm font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wide mb-2">Mission</h3>
+                  <p className="text-gray-700 dark:text-stone-300 leading-relaxed">{keeper.mission}</p>
                 </div>
               )}
             </div>
@@ -179,7 +179,7 @@ function Profile() {
           {/* My Hive(s) */}
           {keeper.hives && keeper.hives.length > 0 && (
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">My Hive(s)</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">My Hive(s)</h2>
               <div className="space-y-3">
                 {keeper.hives.map((hive, index) => {
                   const platform = platformConfig[hive.platform] || platformConfig.Website;
@@ -187,17 +187,17 @@ function Profile() {
                   return (
                     <div
                       key={index}
-                      className="flex items-center justify-between p-4 bg-white rounded-xl border border-amber-200 hover:border-amber-300 transition-colors"
+                      className="flex items-center justify-between p-4 bg-white dark:bg-stone-700 rounded-xl border border-amber-200 dark:border-stone-600 hover:border-amber-300 dark:hover:border-stone-500 transition-colors"
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-2xl">{platform.icon}</span>
                         <div>
-                          <h3 className="font-semibold text-gray-900">{hive.name}</h3>
+                          <h3 className="font-semibold text-gray-900 dark:text-stone-100">{hive.name}</h3>
                           <div className="flex items-center gap-2 mt-1">
                             <span className={`text-xs px-2 py-0.5 rounded-full ${sizeColor}`}>
                               {hive.sizeCategory}
                             </span>
-                            <span className="text-xs text-gray-500">on {hive.platform}</span>
+                            <span className="text-xs text-gray-500 dark:text-stone-400">on {hive.platform}</span>
                           </div>
                         </div>
                       </div>
@@ -219,12 +219,12 @@ function Profile() {
 
           {/* Skills */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Skills</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">Skills</h2>
             <div className="flex flex-wrap gap-2">
               {keeper.skills.map(skill => (
                 <span
                   key={skill}
-                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                  className="px-3 py-1 bg-gray-100 dark:bg-stone-700 text-gray-700 dark:text-stone-300 rounded-full text-sm"
                 >
                   {skill}
                 </span>
@@ -234,17 +234,17 @@ function Profile() {
 
           {/* Open to Collaborate */}
           <div className="mb-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-3">Open to Collaborate</h2>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">Open to Collaborate</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {(keeper.openToCollaborate || keeper.openTo).map(item => (
                 <div
                   key={item}
-                  className="flex items-center gap-2 p-3 bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl border border-amber-200"
+                  className="flex items-center gap-2 p-3 bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-900/20 dark:to-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-700"
                 >
                   <svg className="w-5 h-5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-sm font-medium text-amber-800">{item}</span>
+                  <span className="text-sm font-medium text-amber-800 dark:text-amber-300">{item}</span>
                 </div>
               ))}
             </div>
@@ -253,15 +253,15 @@ function Profile() {
           {/* Past Collaborations */}
           {keeper.pastCollaborations && keeper.pastCollaborations.length > 0 && (
             <div className="mb-8">
-              <h2 className="text-lg font-semibold text-gray-900 mb-3">Past Collaborations</h2>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-3">Past Collaborations</h2>
               <div className="space-y-2">
                 {keeper.pastCollaborations.map((collab, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-3 p-3 bg-green-50 rounded-xl border border-green-200"
+                    className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl border border-green-200 dark:border-green-700"
                   >
                     <span className="text-lg">🤝</span>
-                    <span className="text-sm text-green-800">{collab}</span>
+                    <span className="text-sm text-green-800 dark:text-green-300">{collab}</span>
                   </div>
                 ))}
               </div>
@@ -279,7 +279,7 @@ function Profile() {
             </button>
             <button
               onClick={openRequestModal}
-              className="flex-1 px-6 py-3 bg-white border-2 border-amber-500 text-amber-700 rounded-xl font-semibold hover:bg-amber-50 transition-all flex items-center justify-center gap-2"
+              className="flex-1 px-6 py-3 bg-white dark:bg-stone-800 border-2 border-amber-500 text-amber-700 dark:text-amber-400 rounded-xl font-semibold hover:bg-amber-50 dark:hover:bg-stone-700 transition-all flex items-center justify-center gap-2"
             >
               <span>📋</span>
               Request...
@@ -291,18 +291,18 @@ function Profile() {
       {/* Unified Request Modal */}
       {showRequestModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
             {!requestSent ? (
               <>
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-xl font-bold text-gray-900">
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-stone-100">
                     Send Request to {keeper.name.split(' ')[0]}
                   </h3>
                   <button
                     onClick={() => setShowRequestModal(false)}
-                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="p-2 hover:bg-gray-100 dark:hover:bg-stone-700 rounded-lg transition-colors"
                   >
-                    <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-gray-500 dark:text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -310,14 +310,14 @@ function Profile() {
 
                 {/* Request Type Selection */}
                 <div className="mb-5">
-                  <label className="text-sm font-medium text-gray-700 mb-3 block">What would you like to request?</label>
+                  <label className="text-sm font-medium text-gray-700 dark:text-stone-300 mb-3 block">What would you like to request?</label>
                   <div className="space-y-2">
                     {/* Connection Option */}
                     <label
                       className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                         requestType === 'connection'
-                          ? 'border-amber-500 bg-amber-50'
-                          : 'border-gray-200 hover:border-amber-200'
+                          ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/30'
+                          : 'border-gray-200 dark:border-stone-600 hover:border-amber-200 dark:hover:border-amber-600'
                       } ${isAlreadyConnected ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
                       <input
@@ -331,8 +331,8 @@ function Profile() {
                       />
                       <span className="text-xl">🤝</span>
                       <div className="flex-1">
-                        <span className="font-medium text-gray-900">Connection</span>
-                        <p className="text-sm text-gray-500">
+                        <span className="font-medium text-gray-900 dark:text-stone-100">Connection</span>
+                        <p className="text-sm text-gray-500 dark:text-stone-400">
                           {isAlreadyConnected
                             ? 'Already connected'
                             : 'Request to connect as fellow Hivekeepers'}
@@ -349,8 +349,8 @@ function Profile() {
                     <label
                       className={`flex items-center gap-3 p-4 rounded-xl border-2 cursor-pointer transition-all ${
                         requestType === 'cross-pollination'
-                          ? 'border-amber-500 bg-amber-50'
-                          : 'border-gray-200 hover:border-amber-200'
+                          ? 'border-amber-500 bg-amber-50 dark:bg-amber-900/30'
+                          : 'border-gray-200 dark:border-stone-600 hover:border-amber-200 dark:hover:border-amber-600'
                       }`}
                     >
                       <input
@@ -363,8 +363,8 @@ function Profile() {
                       />
                       <span className="text-xl">🐝</span>
                       <div className="flex-1">
-                        <span className="font-medium text-gray-900">Cross-pollination</span>
-                        <p className="text-sm text-gray-500">Request to join one of their events</p>
+                        <span className="font-medium text-gray-900 dark:text-stone-100">Cross-pollination</span>
+                        <p className="text-sm text-gray-500 dark:text-stone-400">Request to join one of their events</p>
                       </div>
                     </label>
                   </div>
@@ -373,14 +373,14 @@ function Profile() {
                 {/* Event Selection (only for cross-pollination) */}
                 {requestType === 'cross-pollination' && (
                   <div className="mb-5">
-                    <label className="text-sm font-medium text-gray-700 mb-2 block">
+                    <label className="text-sm font-medium text-gray-700 dark:text-stone-300 mb-2 block">
                       Select an event to join <span className="text-red-500">*</span>
                     </label>
                     {keeperEvents.length > 0 ? (
                       <select
                         value={selectedEvent}
                         onChange={(e) => setSelectedEvent(e.target.value)}
-                        className="w-full p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+                        className="w-full p-3 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 dark:text-stone-100"
                       >
                         <option value="">Choose an event...</option>
                         {keeperEvents.map(event => (
@@ -390,13 +390,13 @@ function Profile() {
                         ))}
                       </select>
                     ) : (
-                      <div className="p-4 bg-gray-50 rounded-xl text-center">
-                        <p className="text-gray-500 text-sm">
+                      <div className="p-4 bg-gray-50 dark:bg-stone-700 rounded-xl text-center">
+                        <p className="text-gray-500 dark:text-stone-400 text-sm">
                           No upcoming events available for cross-pollination
                         </p>
                       </div>
                     )}
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-gray-500 dark:text-stone-500 mt-2">
                       Cross-pollination lets you share this event with your hive members.
                     </p>
                   </div>
@@ -404,7 +404,7 @@ function Profile() {
 
                 {/* Message Field */}
                 <div className="mb-5">
-                  <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  <label className="text-sm font-medium text-gray-700 dark:text-stone-300 mb-2 block">
                     Your message <span className="text-red-500">*</span>
                   </label>
                   <textarea
@@ -415,13 +415,13 @@ function Profile() {
                         ? `Hi ${keeper.name.split(' ')[0]}, I'm a fellow Hivekeeper and I'd love to connect because...`
                         : `Hi ${keeper.name.split(' ')[0]}, I'd love to bring some of my community members to your event because...`
                     }
-                    className="w-full h-28 p-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+                    className="w-full h-28 p-3 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none bg-white dark:bg-stone-700 dark:text-stone-100 dark:placeholder-stone-400"
                   />
                 </div>
 
                 {/* Info Box */}
-                <div className="bg-amber-50 p-4 rounded-xl mb-5 border border-amber-200">
-                  <p className="text-sm text-amber-800">
+                <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl mb-5 border border-amber-200 dark:border-amber-700">
+                  <p className="text-sm text-amber-800 dark:text-amber-300">
                     {requestType === 'connection' ? (
                       <>
                         <strong>About connections:</strong> Connecting lets you message directly, see each other's full profiles, and opens opportunities for collaboration.
@@ -438,7 +438,7 @@ function Profile() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => setShowRequestModal(false)}
-                    className="flex-1 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
+                    className="flex-1 px-4 py-3 bg-gray-100 dark:bg-stone-700 text-gray-700 dark:text-stone-300 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-stone-600 transition-all"
                   >
                     Cancel
                   </button>
@@ -461,10 +461,10 @@ function Profile() {
                 <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-3xl">{requestType === 'connection' ? '🤝' : '🐝'}</span>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-stone-100 mb-2">
                   {requestType === 'connection' ? 'Connection' : 'Cross-pollination'} Request Sent!
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-stone-400">
                   {keeper.name.split(' ')[0]} will receive your request and respond soon.
                 </p>
               </div>

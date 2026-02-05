@@ -163,16 +163,16 @@ function Messages() {
     return (
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <div className="mb-6 sm:mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Messages</h2>
-          <p className="text-amber-600 mt-1 text-sm sm:text-base">Connect with fellow Hivekeepers</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100">Messages</h2>
+          <p className="text-amber-600 dark:text-amber-400 mt-1 text-sm sm:text-base">Connect with fellow Hivekeepers</p>
         </div>
 
-        <div className="bg-white rounded-2xl p-8 sm:p-12 shadow-sm border border-amber-100 text-center">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-amber-100 rounded-full flex items-center justify-center">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl p-8 sm:p-12 shadow-sm border border-amber-100 dark:border-stone-700 text-center">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 sm:mb-6 bg-amber-100 dark:bg-amber-900/40 rounded-full flex items-center justify-center">
             <span className="text-3xl sm:text-4xl">💬</span>
           </div>
-          <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">No messages yet</h3>
-          <p className="text-gray-600 mb-6 text-sm sm:text-base">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-stone-100 mb-2">No messages yet</h3>
+          <p className="text-gray-600 dark:text-stone-400 mb-6 text-sm sm:text-base">
             Start by connecting with Hivekeepers on the map!
           </p>
           <button
@@ -191,7 +191,7 @@ function Messages() {
       {/* Back to Dashboard - Hidden on mobile when conversation is selected */}
       <button
         onClick={() => navigate('/')}
-        className={`flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm ${selectedConversation ? 'hidden lg:flex' : ''}`}
+        className={`flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm ${selectedConversation ? 'hidden lg:flex' : ''}`}
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -207,7 +207,7 @@ function Messages() {
             <p className="text-amber-600 mt-1 text-sm sm:text-base">Connect with fellow Hivekeepers</p>
           </div>
           {unreadCount > 0 && (
-            <span className="px-2.5 py-1 sm:px-3 bg-amber-100 text-amber-700 rounded-full text-xs sm:text-sm font-medium">
+            <span className="px-2.5 py-1 sm:px-3 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 rounded-full text-xs sm:text-sm font-medium">
               {unreadCount} unread
             </span>
           )}
@@ -223,7 +223,7 @@ function Messages() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium whitespace-nowrap transition-all ${
               selectedFilter === filter.id
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-amber-100 text-amber-700 hover:bg-amber-200'
+                : 'bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-900/60'
             }`}
           >
             {filter.label}
@@ -232,13 +232,13 @@ function Messages() {
       </div>
 
       {/* Main Content */}
-      <div className="bg-white rounded-2xl shadow-sm border border-amber-100 overflow-hidden">
+      <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 overflow-hidden">
         <div className="flex min-h-[calc(100vh-280px)] sm:min-h-[500px] lg:min-h-[600px]">
           {/* Conversation List - Hidden on mobile when conversation is selected */}
-          <div className={`w-full lg:w-1/3 lg:border-r border-amber-100 ${selectedConversation ? 'hidden lg:block' : ''}`}>
-            <div className="divide-y divide-amber-50">
+          <div className={`w-full lg:w-1/3 lg:border-r border-amber-100 dark:border-stone-700 ${selectedConversation ? 'hidden lg:block' : ''}`}>
+            <div className="divide-y divide-amber-50 dark:divide-stone-700">
               {filteredConversations.length === 0 ? (
-                <div className="p-6 sm:p-8 text-center text-gray-500 text-sm sm:text-base">
+                <div className="p-6 sm:p-8 text-center text-gray-500 dark:text-stone-400 text-sm sm:text-base">
                   No conversations in this category
                 </div>
               ) : (
@@ -251,8 +251,8 @@ function Messages() {
                     <div
                       key={conv.id}
                       onClick={() => handleSelectConversation(conv)}
-                      className={`p-3 sm:p-4 cursor-pointer transition-colors active:bg-amber-100 ${
-                        isSelected ? 'bg-amber-50' : 'hover:bg-amber-50/50'
+                      className={`p-3 sm:p-4 cursor-pointer transition-colors active:bg-amber-100 dark:active:bg-stone-700 ${
+                        isSelected ? 'bg-amber-50 dark:bg-stone-700' : 'hover:bg-amber-50/50 dark:hover:bg-stone-700/50'
                       }`}
                     >
                       <div className="flex items-start gap-3">
@@ -268,14 +268,14 @@ function Messages() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center justify-between gap-2">
-                            <h4 className={`font-medium truncate text-sm sm:text-base ${conv.unread ? 'text-gray-900' : 'text-gray-700'}`}>
+                            <h4 className={`font-medium truncate text-sm sm:text-base ${conv.unread ? 'text-gray-900 dark:text-stone-100' : 'text-gray-700 dark:text-stone-300'}`}>
                               {keeper.name}
                             </h4>
-                            <span className="text-[10px] sm:text-xs text-gray-500 flex-shrink-0">
+                            <span className="text-[10px] sm:text-xs text-gray-500 dark:text-stone-400 flex-shrink-0">
                               {formatTime(lastMessage.timestamp)}
                             </span>
                           </div>
-                          <p className={`text-xs sm:text-sm truncate mt-0.5 sm:mt-1 ${conv.unread ? 'text-gray-900 font-medium' : 'text-gray-500'}`}>
+                          <p className={`text-xs sm:text-sm truncate mt-0.5 sm:mt-1 ${conv.unread ? 'text-gray-900 dark:text-stone-100 font-medium' : 'text-gray-500 dark:text-stone-400'}`}>
                             {lastMessage.fromMe ? 'You: ' : ''}{lastMessage.text}
                           </p>
                         </div>
@@ -296,11 +296,11 @@ function Messages() {
             {selectedConversation ? (
               <>
                 {/* Conversation Header */}
-                <div className="p-3 sm:p-4 border-b border-amber-100 flex items-center gap-3">
+                <div className="p-3 sm:p-4 border-b border-amber-100 dark:border-stone-700 flex items-center gap-3">
                   {/* Back button - mobile only */}
                   <button
                     onClick={handleBack}
-                    className="lg:hidden p-1.5 -ml-1 rounded-lg hover:bg-amber-50 transition-colors"
+                    className="lg:hidden p-1.5 -ml-1 rounded-lg hover:bg-amber-50 dark:hover:bg-stone-700 transition-colors"
                   >
                     <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -313,16 +313,16 @@ function Messages() {
                     className="w-9 h-9 sm:w-10 sm:h-10 rounded-full object-cover"
                   />
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-gray-900 text-sm sm:text-base truncate">
+                    <h4 className="font-semibold text-gray-900 dark:text-stone-100 text-sm sm:text-base truncate">
                       {getKeeper(selectedConversation.keeperId).name}
                     </h4>
-                    <p className="text-xs sm:text-sm text-gray-500 truncate">
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-stone-400 truncate">
                       {getKeeper(selectedConversation.keeperId).location}
                     </p>
                   </div>
                   <button
                     onClick={() => navigate(`/profile/${selectedConversation.keeperId}`)}
-                    className="text-amber-600 hover:text-amber-700 font-medium text-xs sm:text-sm flex items-center gap-1 transition-colors flex-shrink-0"
+                    className="text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium text-xs sm:text-sm flex items-center gap-1 transition-colors flex-shrink-0"
                   >
                     <span className="hidden sm:inline">View Profile</span>
                     <span className="sm:hidden">Profile</span>
@@ -343,11 +343,11 @@ function Messages() {
                         className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-3 py-2 sm:px-4 sm:py-3 ${
                           msg.fromMe
                             ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                            : 'bg-amber-50 text-gray-900'
+                            : 'bg-amber-50 dark:bg-stone-700 text-gray-900 dark:text-stone-100'
                         }`}
                       >
                         <p className="text-sm">{msg.text}</p>
-                        <p className={`text-[10px] sm:text-xs mt-1 ${msg.fromMe ? 'text-amber-100' : 'text-gray-500'}`}>
+                        <p className={`text-[10px] sm:text-xs mt-1 ${msg.fromMe ? 'text-amber-100' : 'text-gray-500 dark:text-stone-400'}`}>
                           {formatTime(msg.timestamp)}
                         </p>
                       </div>
@@ -356,7 +356,7 @@ function Messages() {
                 </div>
 
                 {/* Message Input */}
-                <div className="p-3 sm:p-4 border-t border-amber-100">
+                <div className="p-3 sm:p-4 border-t border-amber-100 dark:border-stone-700">
                   <div className="flex gap-2 sm:gap-3">
                     <input
                       type="text"
@@ -364,7 +364,7 @@ function Messages() {
                       onChange={(e) => setNewMessage(e.target.value)}
                       onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                       placeholder="Type a message..."
-                      className="flex-1 px-3 py-2.5 sm:px-4 sm:py-3 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm sm:text-base"
+                      className="flex-1 px-3 py-2.5 sm:px-4 sm:py-3 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-400 focus:border-transparent text-sm sm:text-base bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                     />
                     <button
                       onClick={handleSendMessage}
@@ -383,13 +383,13 @@ function Messages() {
               /* No conversation selected - desktop only */
               <div className="flex-1 flex items-center justify-center text-center p-6 sm:p-8">
                 <div>
-                  <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-amber-100 rounded-full flex items-center justify-center">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-amber-100 dark:bg-amber-900/40 rounded-full flex items-center justify-center">
                     <span className="text-2xl sm:text-3xl">💬</span>
                   </div>
-                  <h4 className="text-base sm:text-lg font-medium text-gray-900 mb-2">
+                  <h4 className="text-base sm:text-lg font-medium text-gray-900 dark:text-stone-100 mb-2">
                     Select a conversation
                   </h4>
-                  <p className="text-gray-500 text-sm sm:text-base">
+                  <p className="text-gray-500 dark:text-stone-400 text-sm sm:text-base">
                     Choose a conversation from the list to start messaging
                   </p>
                 </div>

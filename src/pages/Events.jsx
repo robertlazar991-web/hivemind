@@ -265,7 +265,7 @@ function Events() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -275,8 +275,8 @@ function Events() {
 
       <div className="flex items-center justify-between mb-6 sm:mb-8 gap-4">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Events</h2>
-          <p className="text-amber-700 mt-1 text-sm sm:text-base">Cross-pollinate with fellow Hivekeepers</p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100">Events</h2>
+          <p className="text-amber-700 dark:text-amber-400 mt-1 text-sm sm:text-base">Cross-pollinate with fellow Hivekeepers</p>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
@@ -298,7 +298,7 @@ function Events() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               selectedCategory === 'all'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             All Events
@@ -308,7 +308,7 @@ function Events() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
               selectedCategory === 'cross-pollination'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             <span>🐝</span>
@@ -320,7 +320,7 @@ function Events() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
               selectedCategory === 'hivekeeper-only'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             <span>🔒</span>
@@ -332,7 +332,7 @@ function Events() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               selectedCategory === 'my-events'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             My Events
@@ -346,7 +346,7 @@ function Events() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               selectedFormat === 'all'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             All Formats
@@ -356,7 +356,7 @@ function Events() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap ${
               selectedFormat === 'online'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -369,7 +369,7 @@ function Events() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all flex items-center gap-1.5 sm:gap-2 whitespace-nowrap ${
               selectedFormat === 'offline'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -393,7 +393,7 @@ function Events() {
           return (
             <div
               key={event.id}
-              className="bg-white rounded-2xl shadow-sm border border-amber-100 p-4 sm:p-6 hover:shadow-md transition-shadow"
+              className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-4 sm:p-6 hover:shadow-md transition-shadow"
             >
               {/* Category Badge */}
               <div className="flex items-start justify-between mb-3 gap-2">
@@ -428,9 +428,9 @@ function Events() {
                 )}
               </div>
 
-              <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
+              <h3 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-stone-100 mb-2">{event.title}</h3>
 
-              <div className="space-y-1.5 sm:space-y-2 text-gray-600 mb-4 text-sm">
+              <div className="space-y-1.5 sm:space-y-2 text-gray-600 dark:text-stone-400 mb-4 text-sm">
                 <div className="flex items-center gap-2">
                   <svg className="w-4 h-4 sm:w-5 sm:h-5 text-amber-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -454,7 +454,7 @@ function Events() {
                     />
                   )}
                   <span
-                    className="text-amber-700 hover:text-amber-800 cursor-pointer truncate"
+                    className="text-amber-700 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 cursor-pointer truncate"
                     onClick={() => host && navigate(`/profile/${host.id}`)}
                   >
                     Hosted by {event.host}
@@ -464,9 +464,9 @@ function Events() {
 
               {/* Hivekeepers sharing this event */}
               {event.category === 'cross-pollination' && sharingCount > 0 && (
-                <div className="flex items-center gap-2 mb-4 p-3 bg-amber-50 rounded-xl">
+                <div className="flex items-center gap-2 mb-4 p-3 bg-amber-50 dark:bg-amber-900/30 rounded-xl">
                   <span className="text-lg">🐝</span>
-                  <span className="text-sm font-medium text-amber-800">
+                  <span className="text-sm font-medium text-amber-800 dark:text-amber-300">
                     {sharingCount} hivekeeper{sharingCount !== 1 ? 's' : ''} sharing this
                   </span>
                 </div>
@@ -474,7 +474,7 @@ function Events() {
 
               {/* Pollination history hint */}
               {event.category === 'cross-pollination' && hostSharedYours > 0 && !isInterested && (
-                <p className="text-xs text-amber-600 mb-3 flex items-center gap-1">
+                <p className="text-xs text-amber-600 dark:text-amber-400 mb-3 flex items-center gap-1">
                   <span>💡</span>
                   {host?.name.split(' ')[0]} has shared {hostSharedYours} of your event{hostSharedYours !== 1 ? 's' : ''}
                 </p>
@@ -524,18 +524,18 @@ function Events() {
       </div>
 
       {filteredEvents.length === 0 && (
-        <div className="text-center py-8 sm:py-12 bg-white rounded-2xl border border-amber-100">
-          <p className="text-gray-500 text-sm sm:text-base">No events found matching your filters.</p>
+        <div className="text-center py-8 sm:py-12 bg-white dark:bg-stone-800 rounded-2xl border border-amber-100 dark:border-stone-700">
+          <p className="text-gray-500 dark:text-stone-400 text-sm sm:text-base">No events found matching your filters.</p>
         </div>
       )}
 
       {/* Create Event Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-amber-100">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6 border-b border-amber-100 dark:border-stone-700">
               <div className="flex items-center justify-between">
-                <h3 className="text-xl font-bold text-gray-900">Create New Event</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-stone-100">Create New Event</h3>
                 <button
                   onClick={() => setShowCreateModal(false)}
                   className="p-2 hover:bg-amber-50 rounded-lg transition-colors"
@@ -549,46 +549,46 @@ function Events() {
 
             <form onSubmit={handleCreateEvent} className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Event Title</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Event Title</label>
                 <input
                   type="text"
                   required
                   value={newEvent.title}
                   onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-                  className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                   placeholder="Enter event title"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Date</label>
                   <input
                     type="date"
                     required
                     value={newEvent.date}
                     onChange={(e) => setNewEvent({ ...newEvent, date: e.target.value })}
-                    className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Time</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Time</label>
                   <input
                     type="time"
                     required
                     value={newEvent.time}
                     onChange={(e) => setNewEvent({ ...newEvent, time: e.target.value })}
-                    className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Timezone</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Timezone</label>
                 <select
                   value={newEvent.timezone}
                   onChange={(e) => setNewEvent({ ...newEvent, timezone: e.target.value })}
-                  className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                 >
                   {timezoneOptions.map(tz => (
                     <option key={tz.value} value={tz.value}>{tz.label}</option>
@@ -598,11 +598,11 @@ function Events() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Event Type</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Event Type</label>
                   <select
                     value={newEvent.type}
                     onChange={(e) => setNewEvent({ ...newEvent, type: e.target.value })}
-                    className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                   >
                     {eventTypes.map(type => (
                       <option key={type} value={type}>{type}</option>
@@ -610,11 +610,11 @@ function Events() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Category</label>
                   <select
                     value={newEvent.category}
                     onChange={(e) => setNewEvent({ ...newEvent, category: e.target.value })}
-                    className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                   >
                     <option value="cross-pollination">🐝 Open for Cross-pollination</option>
                     <option value="hivekeeper-only">🔒 Hivekeeper Only</option>
@@ -630,12 +630,12 @@ function Events() {
                     onChange={(e) => setNewEvent({ ...newEvent, isOnline: e.target.checked })}
                     className="w-4 h-4 text-amber-500 rounded focus:ring-amber-500"
                   />
-                  <span className="text-sm text-gray-700">This is an online event</span>
+                  <span className="text-sm text-gray-700 dark:text-stone-300">This is an online event</span>
                 </label>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">
                   {newEvent.isOnline ? 'Meeting Link' : 'Location'}
                 </label>
                 <input
@@ -643,13 +643,13 @@ function Events() {
                   required
                   value={newEvent.location}
                   onChange={(e) => setNewEvent({ ...newEvent, location: e.target.value })}
-                  className="w-full px-4 py-2 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                  className="w-full px-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 text-gray-900 dark:text-stone-100"
                   placeholder={newEvent.isOnline ? 'Zoom link or meeting URL' : 'Enter venue address'}
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Description</label>
                 <textarea
                   required
                   rows={4}
@@ -683,7 +683,7 @@ function Events() {
       {/* Event Details Modal */}
       {showDetailsModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
             {(() => {
               const event = showDetailsModal;
               const host = getHostByName(event.host);
@@ -872,7 +872,7 @@ function Events() {
       {/* Cross-pollination Modal */}
       {showCrossPollinateModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl max-w-md w-full">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl max-w-md w-full">
             {!requestSent ? (
               (() => {
                 const host = getHostByName(showCrossPollinateModal.host);

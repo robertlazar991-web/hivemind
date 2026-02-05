@@ -117,7 +117,7 @@ function EditProfile() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -127,22 +127,22 @@ function EditProfile() {
 
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Edit Profile</h1>
-        <p className="text-amber-700 mt-1">Update your profile information</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100">Edit Profile</h1>
+        <p className="text-amber-700 dark:text-amber-400 mt-1">Update your profile information</p>
       </div>
 
       {/* Form */}
       <div className="space-y-6">
         {/* Personal Info Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-4 flex items-center gap-2">
             <span>👤</span>
             Personal Info
           </h2>
 
           {/* Profile Photo */}
           <div className="mb-5">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Profile Photo</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-2">Profile Photo</label>
             <div className="flex items-center gap-4">
               <img
                 src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop"
@@ -157,62 +157,62 @@ function EditProfile() {
 
           {/* Name */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Name</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => handleChange('name', e.target.value)}
-              className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 dark:text-stone-100"
               placeholder="Your name"
             />
           </div>
 
           {/* Location */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Location</label>
             <input
               type="text"
               value={formData.location}
               onChange={(e) => handleChange('location', e.target.value)}
-              className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 dark:text-stone-100"
               placeholder="City, Country"
             />
           </div>
 
           {/* Tagline */}
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Tagline</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Tagline</label>
             <input
               type="text"
               value={formData.tagline}
               onChange={(e) => handleChange('tagline', e.target.value)}
-              className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+              className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white dark:bg-stone-700 dark:text-stone-100"
               placeholder="e.g., Meditation & Conscious Leadership"
             />
           </div>
 
           {/* Bio */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">About / Bio</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">About / Bio</label>
             <textarea
               value={formData.bio}
               onChange={(e) => handleChange('bio', e.target.value)}
               rows={4}
-              className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+              className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none bg-white dark:bg-stone-700 dark:text-stone-100"
               placeholder="Tell others about yourself and your work..."
             />
           </div>
         </div>
 
         {/* My Hive Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-4 flex items-center gap-2">
             <span>🐝</span>
             My Hive(s)
           </h2>
 
           {formData.hives.map((hive, index) => (
-            <div key={index} className="mb-5 p-4 bg-amber-50 rounded-xl border border-amber-200">
+            <div key={index} className="mb-5 p-4 bg-amber-50 dark:bg-amber-900/20 rounded-xl border border-amber-200 dark:border-amber-700">
               <div className="flex items-center justify-between mb-3">
                 <span className="text-sm font-medium text-amber-700">Hive {index + 1}</span>
                 {formData.hives.length > 1 && (
@@ -227,21 +227,21 @@ function EditProfile() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Hive Name</label>
+                  <label className="block text-xs text-gray-600 dark:text-stone-400 mb-1">Hive Name</label>
                   <input
                     type="text"
                     value={hive.name}
                     onChange={(e) => handleHiveChange(index, 'name', e.target.value)}
-                    className="w-full px-3 py-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+                    className="w-full px-3 py-2 border border-amber-200 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-white dark:bg-stone-700 dark:text-stone-100"
                     placeholder="Community name"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Size</label>
+                  <label className="block text-xs text-gray-600 dark:text-stone-400 mb-1">Size</label>
                   <select
                     value={hive.sizeCategory}
                     onChange={(e) => handleHiveChange(index, 'sizeCategory', e.target.value)}
-                    className="w-full px-3 py-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+                    className="w-full px-3 py-2 border border-amber-200 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-white dark:bg-stone-700 dark:text-stone-100"
                   >
                     {hiveSizeOptions.map(size => (
                       <option key={size} value={size}>{size}</option>
@@ -249,11 +249,11 @@ function EditProfile() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Platform</label>
+                  <label className="block text-xs text-gray-600 dark:text-stone-400 mb-1">Platform</label>
                   <select
                     value={hive.platform}
                     onChange={(e) => handleHiveChange(index, 'platform', e.target.value)}
-                    className="w-full px-3 py-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+                    className="w-full px-3 py-2 border border-amber-200 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-white dark:bg-stone-700 dark:text-stone-100"
                   >
                     {platformOptions.map(platform => (
                       <option key={platform} value={platform}>{platform}</option>
@@ -261,12 +261,12 @@ function EditProfile() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-600 mb-1">Link</label>
+                  <label className="block text-xs text-gray-600 dark:text-stone-400 mb-1">Link</label>
                   <input
                     type="url"
                     value={hive.link}
                     onChange={(e) => handleHiveChange(index, 'link', e.target.value)}
-                    className="w-full px-3 py-2 border border-amber-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm"
+                    className="w-full px-3 py-2 border border-amber-200 dark:border-stone-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 text-sm bg-white dark:bg-stone-700 dark:text-stone-100"
                     placeholder="https://..."
                   />
                 </div>
@@ -288,42 +288,42 @@ function EditProfile() {
         </div>
 
         {/* Vision & Mission Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-4 flex items-center gap-2">
             <span>✨</span>
             Vision & Mission
           </h2>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1">Vision</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Vision</label>
             <textarea
               value={formData.vision}
               onChange={(e) => handleChange('vision', e.target.value)}
               rows={3}
-              className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+              className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none bg-white dark:bg-stone-700 dark:text-stone-100"
               placeholder="A world where..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Mission</label>
+            <label className="block text-sm font-medium text-gray-700 dark:text-stone-300 mb-1">Mission</label>
             <textarea
               value={formData.mission}
               onChange={(e) => handleChange('mission', e.target.value)}
               rows={3}
-              className="w-full px-4 py-2.5 border border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none"
+              className="w-full px-4 py-2.5 border border-amber-200 dark:border-stone-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 resize-none bg-white dark:bg-stone-700 dark:text-stone-100"
               placeholder="I help..."
             />
           </div>
         </div>
 
         {/* Skills Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-4 flex items-center gap-2">
             <span>🎯</span>
             Skills
           </h2>
-          <p className="text-sm text-gray-500 mb-3">Select all that apply</p>
+          <p className="text-sm text-gray-500 dark:text-stone-500 mb-3">Select all that apply</p>
 
           <div className="flex flex-wrap gap-2">
             {skillOptions.map(skill => (
@@ -333,7 +333,7 @@ function EditProfile() {
                 className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all ${
                   formData.skills.includes(skill)
                     ? 'bg-amber-500 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    : 'bg-gray-100 dark:bg-stone-700 text-gray-700 dark:text-stone-300 hover:bg-gray-200 dark:hover:bg-stone-600'
                 }`}
               >
                 {skill}
@@ -343,12 +343,12 @@ function EditProfile() {
         </div>
 
         {/* Open to Collaborate Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-stone-100 mb-4 flex items-center gap-2">
             <span>🤝</span>
             Open to Collaborate
           </h2>
-          <p className="text-sm text-gray-500 mb-3">What types of collaboration are you open to?</p>
+          <p className="text-sm text-gray-500 dark:text-stone-500 mb-3">What types of collaboration are you open to?</p>
 
           <div className="space-y-2">
             {collaborationOptions.map(option => (
@@ -356,8 +356,8 @@ function EditProfile() {
                 key={option}
                 className={`flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all ${
                   formData.openTo.includes(option)
-                    ? 'bg-amber-100 border-2 border-amber-400'
-                    : 'bg-gray-50 border-2 border-transparent hover:bg-gray-100'
+                    ? 'bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-400'
+                    : 'bg-gray-50 dark:bg-stone-700 border-2 border-transparent hover:bg-gray-100 dark:hover:bg-stone-600'
                 }`}
               >
                 <input
@@ -366,7 +366,7 @@ function EditProfile() {
                   onChange={() => toggleCollaboration(option)}
                   className="w-5 h-5 text-amber-500 rounded focus:ring-amber-500"
                 />
-                <span className={`font-medium ${formData.openTo.includes(option) ? 'text-amber-800' : 'text-gray-700'}`}>
+                <span className={`font-medium ${formData.openTo.includes(option) ? 'text-amber-800 dark:text-amber-300' : 'text-gray-700 dark:text-stone-300'}`}>
                   {option}
                 </span>
               </label>
@@ -378,7 +378,7 @@ function EditProfile() {
         <div className="flex flex-col sm:flex-row gap-3 pt-2">
           <button
             onClick={() => navigate('/my-profile')}
-            className="flex-1 px-6 py-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200 transition-all"
+            className="flex-1 px-6 py-3 bg-gray-100 dark:bg-stone-700 text-gray-700 dark:text-stone-300 rounded-xl font-medium hover:bg-gray-200 dark:hover:bg-stone-600 transition-all"
           >
             Cancel
           </button>

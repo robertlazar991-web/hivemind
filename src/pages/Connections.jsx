@@ -166,7 +166,7 @@ function Connections() {
       {/* Back to Dashboard */}
       <button
         onClick={() => navigate('/')}
-        className="flex items-center gap-1.5 text-amber-600 hover:text-amber-800 mb-4 transition-colors text-sm"
+        className="flex items-center gap-1.5 text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-300 mb-4 transition-colors text-sm"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -176,17 +176,17 @@ function Connections() {
 
       {/* Header */}
       <div className="mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Connections</h1>
-        <p className="text-amber-700 mt-1 text-sm sm:text-base">Your network of fellow Hivekeepers</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-stone-100">My Connections</h1>
+        <p className="text-amber-700 dark:text-amber-400 mt-1 text-sm sm:text-base">Your network of fellow Hivekeepers</p>
       </div>
 
       {/* Pending Requests Section */}
       <section id="pending-requests" className="mb-10 scroll-mt-20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <h2 className="text-xl font-bold text-gray-900">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-stone-100">
             Pending Requests
             {pendingRequests.length > 0 && (
-              <span className="ml-2 px-2.5 py-0.5 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
+              <span className="ml-2 px-2.5 py-0.5 bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300 rounded-full text-sm font-medium">
                 {pendingRequests.length}
               </span>
             )}
@@ -200,7 +200,7 @@ function Connections() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
               requestFilter === 'all'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             All ({pendingRequests.length})
@@ -210,7 +210,7 @@ function Connections() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
               requestFilter === 'connection'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             <span>🤝</span>
@@ -221,7 +221,7 @@ function Connections() {
             className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex items-center gap-1 ${
               requestFilter === 'cross-pollination'
                 ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
-                : 'bg-white text-amber-700 border border-amber-200 hover:bg-amber-50'
+                : 'bg-white dark:bg-stone-800 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-stone-600 hover:bg-amber-50 dark:hover:bg-stone-700'
             }`}
           >
             <span>🐝</span>
@@ -239,7 +239,7 @@ function Connections() {
               return (
                 <div
                   key={request.id}
-                  className="bg-white rounded-2xl shadow-sm border border-amber-100 overflow-hidden"
+                  className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 overflow-hidden"
                 >
                   {/* Type Badge Header */}
                   <div className={`px-5 py-2 ${isConnection ? 'bg-green-50' : 'bg-orange-100'}`}>
@@ -262,11 +262,11 @@ function Connections() {
                           />
                         )}
                         <div className="sm:hidden">
-                          <h3 className="font-semibold text-gray-900">{request.name}</h3>
+                          <h3 className="font-semibold text-gray-900 dark:text-stone-100">{request.name}</h3>
                           {primaryHive && (
-                            <p className="text-sm text-amber-600">{primaryHive.name}</p>
+                            <p className="text-sm text-amber-600 dark:text-amber-400">{primaryHive.name}</p>
                           )}
-                          <p className="text-xs text-gray-400 mt-0.5">{getTimeAgo(request.receivedDays)}</p>
+                          <p className="text-xs text-gray-400 dark:text-stone-500 mt-0.5">{getTimeAgo(request.receivedDays)}</p>
                         </div>
                       </div>
 
@@ -274,12 +274,12 @@ function Connections() {
                       <div className="flex-1 min-w-0">
                         <div className="hidden sm:flex sm:items-start sm:justify-between mb-2">
                           <div>
-                            <h3 className="font-semibold text-gray-900">{request.name}</h3>
+                            <h3 className="font-semibold text-gray-900 dark:text-stone-100">{request.name}</h3>
                             {primaryHive && (
-                              <p className="text-sm text-amber-600">{primaryHive.name}</p>
+                              <p className="text-sm text-amber-600 dark:text-amber-400">{primaryHive.name}</p>
                             )}
                           </div>
-                          <p className="text-xs text-gray-400 flex-shrink-0">
+                          <p className="text-xs text-gray-400 dark:text-stone-500 flex-shrink-0">
                             {getTimeAgo(request.receivedDays)}
                           </p>
                         </div>
@@ -290,13 +290,13 @@ function Connections() {
                             <p className="text-xs text-orange-600 font-medium mb-1">Wants to share with their hive:</p>
                             <div className="flex items-center gap-2">
                               <span>📅</span>
-                              <span className="font-semibold text-gray-900">"{request.eventTitle}"</span>
-                              <span className="text-sm text-gray-500">({request.eventDate})</span>
+                              <span className="font-semibold text-gray-900 dark:text-stone-100">"{request.eventTitle}"</span>
+                              <span className="text-sm text-gray-500 dark:text-stone-400">({request.eventDate})</span>
                             </div>
                           </div>
                         )}
 
-                        <p className="text-gray-600 text-sm mb-4 italic">"{request.message}"</p>
+                        <p className="text-gray-600 dark:text-stone-400 text-sm mb-4 italic">"{request.message}"</p>
 
                         {/* Actions */}
                         <div className="flex flex-wrap gap-2">
@@ -335,8 +335,8 @@ function Connections() {
             })}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-8 text-center">
-            <p className="text-gray-500">
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-8 text-center">
+            <p className="text-gray-500 dark:text-stone-400">
               {requestFilter === 'all'
                 ? 'No pending requests'
                 : requestFilter === 'connection'
@@ -350,9 +350,9 @@ function Connections() {
       {/* Connected Hivekeepers Section */}
       <section id="connected" className="mb-10 scroll-mt-20">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-          <h2 className="text-xl font-bold text-gray-900">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-stone-100">
             Connected
-            <span className="ml-2 px-2.5 py-0.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+            <span className="ml-2 px-2.5 py-0.5 bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 rounded-full text-sm font-medium">
               {connectedHivekeepers.length}
             </span>
           </h2>
@@ -367,7 +367,7 @@ function Connections() {
               placeholder="Search connections..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 pr-4 py-2 border border-amber-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-64"
+              className="pl-10 pr-4 py-2 border border-amber-200 dark:border-stone-600 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 w-full sm:w-64 bg-white dark:bg-stone-800 text-gray-900 dark:text-stone-100"
             />
           </div>
         </div>
@@ -379,7 +379,7 @@ function Connections() {
             return (
               <div
                 key={keeper.id}
-                className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 hover:shadow-md transition-shadow"
+                className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 hover:shadow-md transition-shadow"
               >
                 <div className="flex items-start gap-4 mb-4">
                   <img
@@ -389,11 +389,11 @@ function Connections() {
                     onClick={() => navigate(`/profile/${keeper.id}`)}
                   />
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900 truncate">{keeper.name}</h3>
+                    <h3 className="font-semibold text-gray-900 dark:text-stone-100 truncate">{keeper.name}</h3>
                     {primaryHive && (
-                      <p className="text-sm text-amber-600 truncate">{primaryHive.name}</p>
+                      <p className="text-sm text-amber-600 dark:text-amber-400 truncate">{primaryHive.name}</p>
                     )}
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-1">
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500 dark:text-stone-400 mt-1">
                       <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       </svg>
@@ -426,8 +426,8 @@ function Connections() {
         </div>
 
         {filteredConnections.length === 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-8 text-center">
-            <p className="text-gray-500">No connections found matching "{searchQuery}"</p>
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-8 text-center">
+            <p className="text-gray-500 dark:text-stone-400">No connections found matching "{searchQuery}"</p>
           </div>
         )}
       </section>
@@ -435,10 +435,10 @@ function Connections() {
       {/* Active Collaborations Section */}
       <section id="collaborations" className="scroll-mt-20 mb-10">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-stone-100">
             Active Collaborations
             {activeCollaborations.length > 0 && (
-              <span className="ml-2 px-2.5 py-0.5 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">
+              <span className="ml-2 px-2.5 py-0.5 bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300 rounded-full text-sm font-medium">
                 {activeCollaborations.length}
               </span>
             )}
@@ -453,18 +453,18 @@ function Connections() {
               return (
                 <div
                   key={collab.id}
-                  className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6"
+                  className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6"
                 >
                   {/* Type Badge */}
                   <span className="inline-block px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-medium mb-3">
                     {collab.typeLabel}
                   </span>
 
-                  <h3 className="font-bold text-gray-900 mb-3">{collab.title}</h3>
+                  <h3 className="font-bold text-gray-900 dark:text-stone-100 mb-3">{collab.title}</h3>
 
                   {/* Partner */}
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-sm text-gray-500">With:</span>
+                    <span className="text-sm text-gray-500 dark:text-stone-400">With:</span>
                     {partner && (
                       <div
                         className="flex items-center gap-2 cursor-pointer"
@@ -498,8 +498,8 @@ function Connections() {
             })}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-8 text-center">
-            <p className="text-gray-500 mb-4">No active collaborations yet.</p>
+          <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-8 text-center">
+            <p className="text-gray-500 dark:text-stone-400 mb-4">No active collaborations yet.</p>
             <button
               onClick={() => navigate('/collaborate')}
               className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
@@ -513,17 +513,17 @@ function Connections() {
       {/* Cross-pollination History Section */}
       <section id="pollination-history" className="scroll-mt-20">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-stone-100 flex items-center gap-2">
             <span>🐝</span>
             Cross-pollination History
           </h2>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-amber-100 p-5 sm:p-6">
+        <div className="bg-white dark:bg-stone-800 rounded-2xl shadow-sm border border-amber-100 dark:border-stone-700 p-5 sm:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Events You Shared */}
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <h3 className="font-semibold text-gray-900 dark:text-stone-100 mb-3 flex items-center gap-2">
                 <span className="text-lg">🐝</span>
                 You shared
               </h3>
@@ -533,7 +533,7 @@ function Connections() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 p-3 bg-amber-50 rounded-xl hover:bg-amber-100 transition-colors cursor-pointer"
+                      className="flex items-center gap-3 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-xl hover:bg-amber-100 dark:hover:bg-amber-900/30 transition-colors cursor-pointer"
                       onClick={() => host && navigate(`/profile/${host.id}`)}
                     >
                       {host && (
@@ -544,10 +544,10 @@ function Connections() {
                         />
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-900 truncate">
+                        <p className="text-sm text-gray-900 dark:text-stone-100 truncate">
                           <span className="font-medium">{item.hostName}'s</span> "{item.eventTitle}"
                         </p>
-                        <p className="text-xs text-gray-500">{item.date}</p>
+                        <p className="text-xs text-gray-500 dark:text-stone-400">{item.date}</p>
                       </div>
                     </div>
                   );
@@ -557,7 +557,7 @@ function Connections() {
 
             {/* Events Shared to Your Hive */}
             <div>
-              <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
+              <h3 className="font-semibold text-gray-900 dark:text-stone-100 mb-3 flex items-center gap-2">
                 <span className="text-lg">🌸</span>
                 Your events shared
               </h3>
@@ -567,7 +567,7 @@ function Connections() {
                   return (
                     <div
                       key={item.id}
-                      className="flex items-center gap-3 p-3 bg-green-50 rounded-xl hover:bg-green-100 transition-colors cursor-pointer"
+                      className="flex items-center gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors cursor-pointer"
                       onClick={() => sharer && navigate(`/profile/${sharer.id}`)}
                     >
                       {sharer && (
@@ -578,10 +578,10 @@ function Connections() {
                         />
                       )}
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm text-gray-900 truncate">
+                        <p className="text-sm text-gray-900 dark:text-stone-100 truncate">
                           <span className="font-medium">{item.sharerName}</span> shared your "{item.eventTitle}"
                         </p>
-                        <p className="text-xs text-gray-500">{item.date}</p>
+                        <p className="text-xs text-gray-500 dark:text-stone-400">{item.date}</p>
                       </div>
                     </div>
                   );
